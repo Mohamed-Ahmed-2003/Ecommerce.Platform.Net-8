@@ -1,0 +1,142 @@
+﻿@model IEnumerable<IdentityRole<int>>
+<br />
+<form id="AddForm">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button type="button" onclick="addRole()" style="background:#4154f1;" class="btn text-white">@Utility.GetTranslation("AddRole")</button>
+        </span>
+        <input name="roleName" class="form-control w-25">
+    </div>
+</form>
+
+<table id="rolesTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Utility.GetTranslation("Role")
+            </th>
+            <th>
+                #
+            </th>
+            <th >
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+           <partial name="_RoleRow" model="@role" />
+        }
+    </tbody>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRoleModalLabel">@Utility.GetTranslation("EditRole")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form id="editForm" >
+
+            <div class="modal-body">
+                <div>
+                        <label for="roleName" class="form-label">@Utility.GetTranslation("RoleName")</label>
+                        <input name="roleName" type="text" class="form-control" id="roleName">
+                </div>
+
+                <div>
+                        <label for="roleId" class="form-label">#</label>
+                        <input name="roleId" type="text" class="form-control" id="roleId" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="button" onclick="editRole();return;" class="btn btn-primary">@Utility.GetTranslation("SaveChanges")</button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+
+        function fillEditModal(roleName, roleId) {
+            $('#roleName').val(roleName);
+            $('#roleId').val(roleId);
+        }
+        function addRole() {
+            var formData = $('#AddForm').serialize();
+            $.ajax({
+                url: '@Url.Action("Add", "Roles")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    successNoti("✅", "تم اضافة دور جديد");
+                    $('tbody').prepend(response);
+                },
+                error: function (xhr, status, error) {
+                    errorNoti("❌", "فشلت الاضافة");
+                }
+            });
+        }
+        
+        function editRole() {
+            var formData = $('#editForm').serialize();
+            $.ajax({
+                url: '@Url.Action("Edit", "Roles")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    successNoti("✅", "تم تعديل الدور");
+                    editRoleRow(response.id, response.name);
+                },
+                error: function (xhr, status, error) {
+                    errorNoti("❌", "لم يتم تعديل الدور");
+                }
+            });
+        }
+
+        function deleteRole(roleId) {
+            $.ajax({
+                url: '@Url.Action("Delete","Roles")',
+                type: 'POST',
+                data: { roleId: roleId },
+                success: function (response) {
+                    successNoti("🤐", "تم حذف الدور");
+                    deleteRoleRow(roleId);
+                },
+                error: function (xhr, status, error) {
+                    // Error callback function (errorFunc)
+                    errorNoti('😂', 'فشلت عملية الحذف');
+                }
+            });
+        }
+
+       
+
+        function editRoleRow(roleId, newRoleName) {
+            // Find the existing row by ID and update its content
+            $('#' + roleId + ' td:first-child').text(newRoleName);
+        }
+
+        function deleteRoleRow(roleId) {
+            // Find and remove the row with the specified ID
+            $('#' + roleId).remove();
+        }
+
+    </script>
+}

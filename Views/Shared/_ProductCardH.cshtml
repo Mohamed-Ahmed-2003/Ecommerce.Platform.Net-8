@@ -1,0 +1,87 @@
+﻿@model OtlobLap.Models.Product
+@{
+    var productImageName = Model.MainProductImage ?? Model.ProductImages?.FirstOrDefault()?.URL ?? "no-image.jpg";
+}
+<style>
+    .image-holder {
+    
+        overflow: hidden;
+        position: relative;
+    }
+
+        .image-holder img {
+           
+            transition: transform .5s ease; /* Add transition for smooth scaling */
+        }
+
+    .image-holder:hover img {
+            transform: scale(1.1); /* Scale up the image on hover */
+        }
+
+</style>
+
+<div  dir="ltr" class="row justify-content-center mb-3">
+    <div class="col-md-12 col-xl-10  h-25">
+        <div class="card-h shadow-0 border rounded-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                        <a class="image-holder" asp-action="ProductDetails" asp-controller="Home" asp-route-id="@Model.ID">
+                            <img src="~/Images/Products/@productImageName" width="150rem" height="150rem" style="object-fit:contain" />
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                        <h5>@Model.Name</h5>
+                        <div class="d-flex flex-row">
+                            <div class="text-danger mb-1 me-2">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    if (Model.AverageRating - i >= 1)
+                                    {
+                                        <span class="fa fa-star"></span>
+                                    }
+                                    else if (Model.AverageRating - i > 0)
+                                    {
+                                        <span class="fa fa-star-half-full"></span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:grey;"  class="fa fa-star-o"></span>
+                                    }
+                                }
+                            </div>
+                            <span>@Model.AverageRating.ToString("0.0")</span>
+                        </div>
+                        @if (Model.ProductCategories != null)
+                        {
+                            <div class="mt-1 mb-0 text-muted small">
+                                @foreach (var categ in Model.ProductCategories.Select(PC=>PC.Category))
+                                {
+                                    <span class="text-primary"> • </span>
+                                    <span>@categ.Name</span>
+                                }
+                            </div>
+                        }
+                        <p class="text-truncate mb-4 mb-md-0">
+                            @Model.ShortDescription
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                        <div class="d-flex flex-row align-items-center mb-1">
+                            @if (Model.Discount != null)
+                            {
+                                <h4 class="mb-1 me-1">@Utility.CalculateDiscountedPrice(Model.Price,Model.Discount.Percentage).ToString("C")</h4>
+                                <span class="text-danger"><s>@Model.Price.ToString("C")</s></span>
+                            }
+                            else
+                            {
+                                <h4 class="mb-1 me-1">@Model.Price.ToString("C")</h4>
+                            }
+                        </div>
+                        <h6 class="text-success">@Utility.GetTranslation("Free Delivery")</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OtlobLap.Models.WishlistItem>
+
+
+
+<div class="wishlist-card" >
+    <div class="row">
+        <div class="col-md-8 cart w-100">
+            <div class="title">
+                <div class="row">
+                    <div class="col  text-center"><h4><b>@Utility.GetTranslation("WishlistTitle") <i class="fa-regular fa-heart"></i></b></h4></div>
+
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <div class="col text-start  align-self-center text-right text-muted">@Model.Count() @Utility.GetTranslation("WishlistProductsCount")</div>
+                    }
+
+                </div>
+            </div>
+
+            @if (Model != null && Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+
+                    <div id="wish-item-@item.Id" class="wish-item row border-top border-bottom">
+                        <div class="row main align-items-center">
+
+                            <div class="col-2"><a asp-action="ProductDetails" asp-controller="Home" asp-route-Id="@item.ProductId"><img class="img-fluid" style="border-radius:1rem" src="~/Images/Products/@item.Product.MainProductImage"></a></div>
+                            <div class="col">
+                                <div class="row text-muted">@item.Product.Brand</div>
+                                <div class="row">@item.Product.Name</div>
+                                <div class="col text-start ">
+                                    @item.Product.Price.ToString("C")
+                                    <i onclick="RemoveFromWishlist('@item.Id')" style="cursor:pointer; font-size:1.5rem" class="fa-regular fa-circle-xmark m-2"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                <div class="back-to-shop"><a asp-controller="Home" asp-action="Index">&leftarrow;</a><span class="text-muted">@Utility.GetTranslation("BackToShopping")</span></div>
+            }
+            else
+            {
+                <p class="alert alert-info">@Utility.GetTranslation("NoWishlistProducts") 😒😒😒.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/Cart.css" />
+
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/UserActions.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/UserActions.js"></script>
+
+}

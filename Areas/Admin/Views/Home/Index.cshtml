@@ -1,0 +1,330 @@
+﻿@model OtlobLap.ViewModels.AdminDashboardVM
+
+<!-- Left side columns -->
+<div class="col-lg-8">
+    <div class="row">
+        <!-- 1 بطاقة  -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card customers-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("CustomersTitle")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-people icon-style icon-color-8"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalCustomers</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-xxl-4 col-md-6">
+
+            <div class="card info-card sellers-card">
+                <div class="card-body">
+                <h5 class="card-title">@Utility.GetTranslation("SellersCount") </h5>
+                    <div class="d-flex align-items-center">
+
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-people-fill icon-style icon-color-1"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>@Model.TotalSellers</h6>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+           
+
+
+        </div> 
+        
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card orders-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("OrdersCount") </h5>
+                    <div class="d-flex align-items-center">
+
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-receipt icon-style icon-color-2"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6>@Model.TotalOrders</h6>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+          <!-- ربحا افضل البائعين  -->
+        @if (Model.TopSellerRevenue != null && Model.TopSellerRevenue.Any())
+        {
+            <div class="col-12 h-100">
+                <div class="card top-sellers overflow-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">@Utility.GetTranslation("TopSellersbyRevenue")</h5>
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@Utility.GetTranslation("Preview")</th>
+                                    <th scope="col">@Utility.GetTranslation("SellerName")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalRevenue")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalSales")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalReviews")</th>
+                                    <th scope="col">@Utility.GetTranslation("AvgRating")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var seller in Model.TopSellerRevenue)
+                                {
+                                    var userImage = "/images/Users/noImage.png";
+                                    if (seller.UserImage != null)
+                                    userImage = $"data:image/png;base64,{Convert.ToBase64String(seller.UserImage)}";
+                                    <tr>
+                                        <td>
+                         <img class="rounded-circle" width="40px" height="40px" style="" src="@userImage" alt="Seller Image" />
+                                        </td>
+
+                                        <td>@seller.SellerName</td>
+                                        <td>@seller.TotalRevenue.ToString("C")</td>
+                                        <td>@seller.TotalSales</td>
+                                        <td>@seller.TotalReviews</td>
+                                        <td>@seller.AvgRating</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- المبيعات الأخيرة -->
+        <div class="col-12 h-100 ">
+            <div class="card recent-sales overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("RecentSalesTitle")</h5>
+                    <table class="table table-borderless datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">@Utility.GetTranslation("Customer")</th>
+                                <th scope="col">@Utility.GetTranslation("Product")</th>
+                                <th scope="col">@Utility.GetTranslation("Price")</th>
+                                <th scope="col">@Utility.GetTranslation("Status")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sale in Model.RecentSales)
+                            {
+                                <tr>
+                                    <th scope="row"><a href="#">#@sale.OrderId</a></th>
+                                    <td>@sale.CustomerName</td>
+                                    <td><a href="#" class="text-primary">@sale.ProductName</a></td>
+                                    <td>@sale.Price.ToString("C")</td>
+                                    <td>@Html.Raw(Utility.OrderStatusSpan(sale.Status))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- نهاية المبيعات الأخيرة -->
+
+
+             <!-- سمعة افضل البائعين  -->
+        @if (Model.TopSellerRevenue != null && Model.TopSellerRated.Any())
+        {
+            <div class="col-12 h-100">
+                <div class="card top-sellers overflow-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">@Utility.GetTranslation("TopSellersRated")</h5>
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">@Utility.GetTranslation("Preview")</th>
+                                    <th scope="col">@Utility.GetTranslation("SellerName")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalRevenue")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalSales")</th>
+                                    <th scope="col">@Utility.GetTranslation("TotalReviews")</th>
+                                    <th scope="col">@Utility.GetTranslation("AvgRating")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var seller in Model.TopSellerRevenue)
+                                {
+
+                                    var userImage = "/images/Users/noImage.png";
+                                    if (seller.UserImage != null)
+                                        userImage = $"data:image/png;base64,{Convert.ToBase64String(seller.UserImage)}";
+                                    <tr>
+                                        <td>
+                         <img class="rounded-circle" width="40px" height="40px" style="" src="@userImage" alt="Seller Image" />
+                                        </td>
+
+                                        <td>@seller.SellerName</td>
+                                        <td>@seller.TotalRevenue.ToString("C")</td>
+                                        <td>@seller.TotalSales</td>
+                                        <td>@seller.TotalReviews</td>
+                                        <td>
+                                            <div class="rate">
+                                                @{
+                                                    for (int i = 0; i < 5; i++)
+                                                    {
+                                                        if (seller.AvgRating - i >= 1)
+                                                        {
+                                                            <span style="color:#2eca6a" class="bi bi-star-fill"></span>
+                                                        }
+                                                        else if (seller.AvgRating - i > 0)
+                                                        {
+                                                            <span style="color:#2eca6a" class="bi bi-star-half"></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="color:grey;" class="bi bi-star"></span>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- نهاية  -->
+     
+
+    </div>
+</div>
+
+<!-- End Left side columns -->
+<div class="col-lg-4 ">
+    <div class="row ">
+        <!-- products Card -->
+        <div class="col-xl-12">
+            <div class="card info-card Products-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("ProductsCount")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-box-fill icon-style icon-color-3"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalProducts</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row ">
+        <!-- products Card -->
+        <div class="col-xl-12">
+            <div class="card info-card ">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("TotalCategories")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-list-columns icon-style icon-color-4"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalCategories</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Customers Card -->
+    </div>
+
+    <div class="row ">
+        <!-- reviews Card -->
+        <div class="col-xl-12">
+            <div class="card info-card reviews-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("RolesCount")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-key-fill icon-style icon-color-5"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.TotalRoles</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Customers Card -->
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+
+            $('.sales-card .filter-btn').click(function () {
+                const clicked_filter = $(this);
+                var filterOption = clicked_filter.data('filter');
+
+                $('.sales-card .curr-filter').html(clicked_filter.text());
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSalesCount", "Home")',
+                    data: { filterOption: filterOption },
+                    success: function (data) {
+                        $('.sales-count').html(data.sales);
+                        $('.prev-sales-percent ').html(data.percentIncrease + '%');
+
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+
+            });
+
+            $('.revenue-card .filter-btn').click(function () {
+                const clicked_filter = $(this);
+                var filterOption = clicked_filter.data('filter');
+
+                $('.revenue-card  .curr-filter').html(clicked_filter.text());
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetRevenue", "Home")',
+                    data: { filterOption: filterOption },
+                    success: function (data) {
+                        $('.revenue-count').html(data.revenue);
+                        $('.prev-revenue-percent').html(data.percentIncrease + '%');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

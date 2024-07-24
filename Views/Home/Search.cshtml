@@ -1,0 +1,104 @@
+﻿@using OtlobLap.Configuration
+@model SearchVM
+
+@{
+    ViewData["Title"] = Utility.GetTranslation("Search");
+}
+
+<section id="search-results">
+
+    @if (Model.Results.Products != null && Model.Results.Products.Count() > 0)
+    {
+		<div class="categorie-filter-warp">
+			<p>@Utility.GetTranslation("SearchResults") @Model.Results.Products.Count()</p>
+            
+			<div class="cf-right">
+				<div class="cf-layouts">
+					<a href="#"><img src="img/icons/layout-1.png" alt=""></a>
+					<a class="active" href="#"><img src="img/icons/layout-2.png" alt=""></a>
+				</div>
+
+
+				<form id="ProductsLoadSettings">
+					<input class="setPage" type="hidden" asp-for="SettingsDto.Page" />
+					<input value="@ViewMode.Horizontal" type="hidden" asp-for="SettingsDto.Mode" />
+					<input value="@Model.Keyword" type="hidden" asp-for="SettingsDto.SearchKey" />
+                    <select id="categorySelect" asp-for="SettingsDto.CategoryId">
+                        <option value="">@Utility.GetTranslation("Category")</option>
+                        @if (Model.Results.Categories != null && Model.Results.Categories.Count > 0)
+                        {
+                            foreach (var categ in Model.Results.Categories)
+                            {
+                                <option value="@categ.ID">@categ.Name</option>
+                            }
+                        }
+                    </select>
+
+					<select id="brandSelect" asp-for="SettingsDto.BrandId">
+						<option value="">@Utility.GetTranslation("Brand")</option>
+						@if (Model.Results.Brands != null && Model.Results.Brands.Any())
+						{
+							foreach (var brand in Model.Results.Brands)
+							{
+								<option value="@brand.Id">@brand.Name</option>
+							}
+						}
+					</select>
+
+					<select id="filterSelect" asp-for="SettingsDto.Filter">
+						<option value="">@Utility.GetTranslation("SortBy")</option>
+						@foreach (var filter in Enum.GetValues<ResultsFilter>())
+						{
+							<option value="@((int) filter)">@Utility.GetTranslation(filter.ToString())</option>
+						}
+					</select>
+				</form>
+
+			</div>
+
+
+		</div>
+
+		@if (Model.Results.Products != null && Model.Results.Products.Count > 0)
+		{
+
+			<div id="products-container" class="container">
+				<div class="row " >
+					<partial name="_PoductsLoadHorizontal" model="@Model.Results.Products" />
+				</div>
+
+			</div>
+
+			<div id="pagination-container">
+			</div>
+		}
+		else
+		{
+			<p class="alert alert-info text-center mt-2">@Utility.GetTranslation("NoCategoryProducts")</p>
+		}
+
+    }
+    else
+    {
+        <p class="alert alert-info">@Utility.GetTranslation("NoResults") 😒😒😒.</p>
+    }
+
+</section>
+@section Scripts {
+		<script src="~/js/HomeActions.js" ></script>
+	<script>
+
+		$(document).ready(function () {
+			loadPaginationControls();
+			paginationEvent();
+		});
+
+		$('#ProductsLoadSettings select').change(function () {
+			$('.setPage').val($('.current-page').data('page'));
+
+			loadProducts();
+		});
+
+
+	</script>
+}

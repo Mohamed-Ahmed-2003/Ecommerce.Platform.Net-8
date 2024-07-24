@@ -1,0 +1,443 @@
+﻿@model OtlobLap.Models.Product
+
+@{
+    ViewData["Title"] = Utility.GetTranslation("Product Details");
+    int reviewsCount = Model?.Reviews?.Count ?? 0;
+}
+<!-- Page -->
+<div class="page-area product-page spad">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<figure>
+					<img class="product-big-img" src="~/Images/Products/@Model.MainProductImage" alt="">
+				</figure>
+				<div class="product-thumbs" dir="ltr">
+					<div class="product-thumbs-track">
+
+						@if (Model.ProductImages != null && Model.ProductImages.Count() > 1)
+						{
+							@foreach (var image in Model.ProductImages)
+							{
+									var imageUrl = Url.Content("~/Images/Products/" + image.URL);
+								<div class="pt" data-imgbigurl="@imageUrl">
+									<img src="@imageUrl" alt="">
+								</div>
+
+							}
+						}
+		
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="product-content">
+					<h2>@Model.Name</h2>
+					<div class="pc-meta">
+
+
+							<h4 cite="price"> @(Utility.CalculateDiscountedPrice(Model.Price, Model.Discount?.Percentage ?? 0).ToString("C")) </h4>
+
+							@if (Model.Discount != null)
+							{
+								<span class="text-black-50 line-through">@Model.Price.ToString("C")</span>
+							}
+
+						<div class="review">
+						
+							<div class="rating">
+								@{
+									for (int i = 0; i < 5; i++)
+									{
+										if (Model?.AverageRating - i >= 1)
+										{
+											<span style="color:goldenrod" class="fa fa-star"></span>
+										}
+										else if (Model?.AverageRating - i > 0)
+										{
+											<span style="color:goldenrod" class="fa fa-star-half-full"></span>
+										}
+										else
+										{
+											<span style="color:grey;" class="fa fa-star-o"></span>
+										}
+									}
+								}
+							</div>
+							<span>(@reviewsCount) @Utility.GetTranslation("Reviews")</span>
+						</div>
+					</div>
+
+					<p>@Model.ShortDescription</p>
+
+					<p>
+						<strong class="text-black font-monospace">@Utility.GetTranslation("Remaining") </strong>
+						@Model.AvailableInStock @Utility.GetTranslation("Pieces")
+					</p>
+					<p><strong class="text-black font-monospace">@Utility.GetTranslation("Sold by")</strong> @Model.Seller?.Name </p>
+
+
+					@if (User.IsInRole("Customer") && Model.AvailableInStock > 0)
+					{
+						<div class="product-count d-flex align-items-end justify-content-between mb-4">
+							<div>
+								<form action="#" class="display-flex">
+									<div class="qtyplus">+</div>
+									<input type="text" name="quantity" value="1" class="qty">
+									<div class="qtyminus">-</div>
+								</form>
+							</div>
+							<button class="add-to-Cart-btn site-btn btn-line">@Utility.GetTranslation("AddToCart")</button>
+						</div>
+					}
+					else if (Model.AvailableInStock <= 0)
+					{
+						<span style="cursor:auto" class="btn btn-warning">
+							@Utility.GetTranslation("Out of Stock")
+						</span>
+					}
+					else if (ViewBag.UserId == Model.SellerID)
+					{
+						<span style="cursor:auto" class="btn btn-outline-dark">@Utility.GetTranslation("This is your product")</span>
+					}
+
+				</div>
+			</div>
+		</div>
+		<div class="product-details">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1">
+					<ul class="nav" role="tablist" dir="ltr">
+						<li class="nav-item">
+							<a class="nav-link active" id="tab-1-tab" data-bs-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">
+								@Utility.GetTranslation("Description")
+							</a>
+
+						</li>
+				
+						<li class="nav-item">
+							<a class="nav-link" id="tab-3-tab" data-bs-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">
+								@Utility.GetTranslation("Reviews")  ( @Model.Reviews.Count )
+							</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<!-- single tab content -->
+						<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab-1">
+
+							@Html.Raw(Model.Description)
+
+						</div>
+					
+						<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="tab-3">
+
+							@if (User.IsInRole("Customer") && ViewBag.HasBought)
+							{
+								<form class="review-form">
+									<div class="form-group">
+										<h4>@Utility.GetTranslation("Rate the Product")</h4>
+										<input type="hidden" name="CustomerId" value="@ViewBag.UserId" />
+										<input type="hidden" name="ProductId" value="@Model.ID" />
+										<input type="text" name="Title" class="form-control mb-3 p-2 w-25" placeholder="@Utility.GetTranslation("Title")" />
+										<textarea type="text" name="Description" class=" form-control w-75  mb-3" style="height:10rem" placeholder="@Utility.GetTranslation("Details")"></textarea>
+										<div class="reviews-counter">
+											<div dir="rtl" class="rating">
+												<input type="radio" name="Rating" value="5" id="5"><label for="5">☆</label>
+												<input type="radio" name="Rating" value="4" id="4"><label for="4">☆</label>
+												<input type="radio" name="Rating" value="3" id="3"><label for="3">☆</label>
+												<input type="radio" name="Rating" value="2" id="2"><label for="2">☆</label>
+												<input type="radio" name="Rating" value="1" id="1"><label for="1">☆</label>
+											</div>
+										</div>
+									</div>
+									<button type="button" onclick="addReview()" class="submit-form round-black-btn">@Utility.GetTranslation("Submit Review")</button>
+								</form>
+							}
+							<div id="reviews-container">
+								@if (Model.Reviews is null || Model.Reviews.Count == 0)
+								{
+									<h4 class="mb-20 text-center ">@Utility.GetTranslation("NoReviews")</h4>
+								}
+								else
+								{
+									@foreach (var review in Model.Reviews)
+									{
+										<partial name="_ReviewBox" model="@review" />
+									}
+								}
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		@if (ViewBag.SimilarProducts != null && (ViewBag.SimilarProducts as List<Product>).Count > 0)
+		{
+			<div class="text-center rp-title">
+				<h5>
+					@Utility.GetTranslation("Similar Products")
+				</h5>
+			</div>
+			<div class="row">
+				@foreach (Product product in ViewBag.SimilarProducts)
+				{
+					<partial name="_ProductCard" model="@product" />
+				}
+
+			</div>
+		}
+	</div>
+</div>
+<!-- Page end -->
+
+
+
+<!-- Modal update -->
+<div dir="rtl" class="modal fade" id="updateReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<h5 class="modal-title text-center" id="exampleModalLabel">تعديل المراجعة</h5>
+			</div>
+
+			<div class="modal-body">
+				<form id="updateReviewForm">
+
+
+					<input type="hidden" id="updateReviewId" name="id" />
+					<input type="hidden" id="ProductId" name="ProductId" />
+
+					<input type="hidden" id="CustomreId" name="CustomerId" />
+
+					<label class="form-label">التقييم </label>
+					<input name="Rating" id="updateReviewRating" type="number" min="1" max="5" class="form-control" />
+
+					<label class="form-label">العنوان </label>
+					<input name="Title" id="updateReviewTitle" class="form-control" />
+
+					<label class="form-label">الوصف </label>
+					<textarea name="Description" id="updateReviewDescription" class="form-control" style="resize:none"></textarea>
+				</form>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+				<button type="button" onclick="updateReview()" class="btn btn-primary submit-update-form">تحديث</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Styles {
+	<link rel="stylesheet" href="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+	<link rel="stylesheet" href="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+	<link rel="stylesheet" href="~/css/ProductDetails.css" />
+	<link rel="stylesheet" href="~/css/ProductCard_V.css" />
+    
+
+}
+
+@section Scripts {
+	<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script src="~/js/mixitup.min.js"></script>
+	<script src="~/js/sly.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.nicescroll.min.js"></script>
+	<script src="~/js/main.js"></script>
+	<script src="~/js/UserActions.js"></script>
+
+		<script>
+			
+		$(document).ready(function() {
+		    var slider = $("#slider");
+		    var thumb = $("#thumb");
+		    var slidesPerPage = 4; //globaly define number of elements per page
+		    var syncedSecondary = true;
+		    slider.owlCarousel({
+		        items: 1,
+		        slideSpeed: 2000,
+		        nav: true,
+		        autoplay: false, 
+		        dots: false,
+		        loop: true,
+		        responsiveRefreshRate: 200
+		    }).on('changed.owl.carousel', syncPosition);
+		    thumb
+		        .on('initialized.owl.carousel', function() {
+		            thumb.find(".owl-item").eq(0).addClass("current");
+		        })
+		        .owlCarousel({
+		            items: slidesPerPage,
+		            dots: false,
+		            nav: true,
+					margin:4,
+		            item: 4,
+		            smartSpeed: 200,
+		            slideSpeed: 500,
+		            slideBy: slidesPerPage, 
+		        	navText: ['<svg width="18px" height="18px" viewBox="0 0 11 20"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M9.554,1.001l-8.607,8.607l8.607,8.606"/></svg>', '<svg width="25px" height="25px" viewBox="0 0 11 20" version="1.1"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M1.054,18.214l8.606,-8.606l-8.606,-8.607"/></svg>'],
+		            responsiveRefreshRate: 100
+		        }).on('changed.owl.carousel', syncPosition2);
+		    function syncPosition(el) {
+		        var count = el.item.count - 1;
+		        var current = Math.round(el.item.index - (el.item.count / 2) - .5);
+		        if (current < 0) {
+		            current = count;
+		        }
+		        if (current > count) {
+		            current = 0;
+		        }
+		        thumb
+		            .find(".owl-item")
+		            .removeClass("current")
+		            .eq(current)
+		            .addClass("current");
+		        var onscreen = thumb.find('.owl-item.active').length - 1;
+		        var start = thumb.find('.owl-item.active').first().index();
+		        var end = thumb.find('.owl-item.active').last().index();
+		        if (current > end) {
+		            thumb.data('owl.carousel').to(current, 100, true);
+		        }
+		        if (current < start) {
+		            thumb.data('owl.carousel').to(current - onscreen, 100, true);
+		        }
+		    }
+		    function syncPosition2(el) {
+		        if (syncedSecondary) {
+		            var number = el.item.index;
+		            slider.data('owl.carousel').to(number, 100, true);
+		        }
+		    }
+		    thumb.on("click", ".owl-item", function(e) {
+		        e.preventDefault();
+		        var number = $(this).index();
+		        slider.data('owl.carousel').to(number, 300, true);
+		    });
+
+
+            $(".qtyminus").on("click",function(){
+                var now = $(".qty").val();
+                if ($.isNumeric(now)){
+                    if (parseInt(now) -1> 0)
+                    { now--;}
+                    $(".qty").val(now);
+                }
+            })            
+            $(".qtyplus").on("click",function(){
+                var now = $(".qty").val();
+                if ($.isNumeric(now)){
+                    $(".qty").val(parseInt(now)+1);
+                }
+            });
+			addToCartListener();
+		});
+		function addReview() {
+			
+			
+			const formData = $('.review-form').serialize();
+			$.ajax({
+				url: '@Url.Action("AddReview", "Review")', // Replace this with the actual URL of your action
+				type: 'POST',
+				data: formData,
+				success: function (response) {
+					const reviewsContainer = $('#reviews-container');
+					const reviewsCount = $('.review-block').length;
+					if (reviewsCount < 1) reviewsContainer.empty();
+					console.log(reviewsCount);
+						
+				 reviewsContainer.append(response);
+					successNoti("شكرا","تمت اضافة مراجعتك")
+				},
+		
+				error: function (xhr, status, error) {
+					errorNoti("نأسف", "لم يتم اضافة مراجعتك")
+					console.error(xhr.responseText);
+				}
+			});
+			return false; // Prevents the default form submission behavior
+
+		}	
+		function updateReview() {
+			const formData = $('#updateReviewForm').serialize();
+			$.ajax({
+				url: '@Url.Action("UpdateReview", "Review")', // Replace this with the actual URL of your action
+				type: 'POST',
+				data: formData,
+				success: function (response) {
+
+					$('.your-review').remove();
+					$('#reviews-container').append(response);
+					$('#updateReviewModal').modal('hide'); // Hide the modal
+
+					successNoti("شكرا","تمت تحديث مراجعتك")
+				},
+				error: function (xhr, status, error) {
+					errorNoti("نأسف", "لم يتم تحديث مراجعتك")
+					console.error(xhr.responseText);
+				}
+			});
+		}
+		function removeReview(reviewId) {
+			$.ajax({
+				url: '@Url.Action("DeleteReview", "Review")', // Replace this with the actual URL of your action
+				type: 'GET',
+				data: { id: reviewId },
+				success: function (response) {
+					// Assuming your response contains information about the success of removal
+					
+						// Remove the review element from the DOM
+						$('#review_' + reviewId).remove();
+						const reviewsCount = $('.review-block').length;
+						if (reviewsCount < 1) {
+							$('#reviews-container').html(`<h4 class="mb-20 text-center ">لا يوجد مراجعات لهذا المنتج. </h4>`);
+
+						}
+						successNoti("شكرا", "تمت إزالة المراجعة بنجاح");
+					
+					
+				},
+				error: function (xhr, status, error) {
+					errorNoti("نأسف", "حدث خطأ أثناء محاولة إزالة المراجعة");
+					console.error(xhr.responseText);
+				}
+			});
+		}
+
+
+		function addToCartListener (){
+			$('.add-to-Cart-btn').click(function () {
+				const quantity = $('.qty').val();
+				$.ajax({
+					type: "GET",
+					url: '@Url.Action("AddToCart", "Cart")',
+					data: { productId: @Model.ID, quan: quantity },
+					success: () => {
+						successNoti('نجحت العملية', `تمت اضافة المنتج الي عربة التسوق`);
+					},
+					error: (xhr, status, error) => {
+						errorNoti ('فشلت العملية 😂😂','كمية المنتج المطلوبة غير متاحة')
+						console.log(error);
+					}
+
+
+				});
+
+			});
+		}
+		function PopulateUpdateModal(reviewId, CustomreId, ProductId, rating, title, description) {
+			document.getElementById('updateReviewId').value = reviewId;
+			document.getElementById('CustomreId').value = CustomreId;
+			document.getElementById('ProductId').value = ProductId;
+			document.getElementById('updateReviewRating').value = rating;
+			document.getElementById('updateReviewTitle').value = title;
+			document.getElementById('updateReviewDescription').value = description;
+		}
+		</script>
+}

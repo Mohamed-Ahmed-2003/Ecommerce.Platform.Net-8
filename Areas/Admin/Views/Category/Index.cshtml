@@ -1,0 +1,176 @@
+﻿ @model ManageCategoriesVM
+
+<button type="button" data-bs-toggle="modal" data-bs-target="#AddCategoryModal" class="btn btn-primary w-auto">
+    <span class="bi bi-plus"></span> @Utility.GetTranslation("AddCategory")
+</button>
+
+<table class="table table-striped datatable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Utility.GetTranslation("BannerImage")</th>
+            <th>@Utility.GetTranslation("Name")</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categ  in Model.Categories)
+        {
+            <tr>
+                <td>@categ.ID</td>
+                @{
+                    var bannerImg = string.IsNullOrEmpty(categ.BannerUrl) ? Utility.NoImageUrl : categ.BannerUrl;
+                }
+                <td><img src="~/Images/Categories/@bannerImg" alt="Cover Image" class="img-fluid" style="max-width: 100px;" /></td>
+                @* <td >@Html.Raw(banner.Description)</td> *@
+                <td>
+                    <strong>@categ.Name </strong> 
+                    </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+
+       <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#EditCategoryModal" onclick="fillEditCategModal(`@categ.ID`, `/Images/Categories/@bannerImg`, `@categ.Name`) ">
+                                    <span class="bi bi-pencil"></span>
+                                    @Utility.GetTranslation("Edit")
+                                </button>
+
+                            </li>
+
+                            <li>
+                                <a href="#DeleteCategoryModal" onclick="fillDeleteCategoryModal('@categ.ID')" class="dropdown-item" data-bs-toggle="modal">
+                                    <span class="bi bi-trash text-danger"></span>
+                                    @Utility.GetTranslation("Delete")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="AddCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("AddCategory")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addCategoryForm" method="post" enctype="multipart/form-data" asp-action="Create" asp-controller="Category">
+
+                    <div class="form-group">
+                        <label asp-for="CategoryVM.Name" class="control-label">@Utility.GetTranslation("Name")</label>
+                        <input class="form-control"  asp-for="CategoryVM.Name" ></input>
+                        <span asp-validation-for="CategoryVM.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bannerImage" class="form-label">@Utility.GetTranslation("BannerImage")</label>
+                        <input type="file" class="form-control" id="bannerImage" asp-for="CategoryVM.ImageFile" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div class="mb-3">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="width: 100%; height: 20rem;object-fit:cover; display: none;">
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("AddCategory")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("EditCategory")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoryModal" method="post" enctype="multipart/form-data" asp-action="Edit" asp-controller="Category">
+                    <input type="hidden" id="CategoryId" asp-for="CategoryVM.Id" />
+                    <div class="form-group">
+                        <label asp-for="CategoryVM.Name" class="control-label">@Utility.GetTranslation("Name")</label>
+                        <input id="CategoryName" class="form-control" asp-for="CategoryVM.Name" ></input>
+                        <span asp-validation-for="CategoryVM.Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBannerImage" class="form-label">@Utility.GetTranslation("BannerImage")</label>
+                        <input type="file" class="form-control" id="editBannerImage" asp-for="CategoryVM.ImageFile" accept="image/*" onchange="previewEditImage(event)" />
+                    </div>
+                    <div class="mb-3">
+                        <img id="editImagePreview" src="#" alt="Image Preview" style="width: 100%; height: 20rem;object-fit:cover; display: none;">
+                    </div>
+
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("DeleteCategory")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Delete" asp-controller="Category">
+                <div class="modal-body">
+
+                    <p>@Utility.GetTranslation("ConfirmDeleteCategory")</p>
+                    <input name="Id" type="hidden" id="categoryIdToDelete" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">@Utility.GetTranslation("Delete")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+ 
+        function fillEditCategModal(CategoryId, ImageUrl, Name) {
+            $('#EditCategoryModal #CategoryId').val(CategoryId);
+
+            $('#EditCategoryModal #CategoryName').val(Name);
+            if (ImageUrl != null && ImageUrl !="")
+            $('#EditCategoryModal #editImagePreview').attr('src', ImageUrl).show();
+
+            // Show the modal
+            $('#EditCategoryModal').modal('show');
+        }
+        function fillDeleteCategoryModal(categoryId) {
+            $('#categoryIdToDelete').val(categoryId);
+        }
+        function previewImage(event) {
+            var input = event.target;
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'block';
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                imagePreview.src = dataURL;
+            };
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    </script>
+
+}

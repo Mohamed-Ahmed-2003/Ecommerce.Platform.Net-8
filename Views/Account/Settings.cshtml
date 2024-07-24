@@ -1,0 +1,266 @@
+﻿@model ProfileVM
+
+@{
+    ViewData["Title"] = Utility.GetTranslation("Settings");
+}
+
+
+<style> /*image uploading style*/
+
+    .avatar-upload {
+        position: relative;
+        max-width: 205px;
+        margin: 50px auto;
+    }
+
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 12px;
+            z-index: 1;
+            top: 10px;
+        }
+
+            .avatar-upload .avatar-edit input {
+                display: none;
+            }
+
+                .avatar-upload .avatar-edit input + label {
+                    display: inline-block;
+                    width: 34px;
+                    height: 34px;
+                    margin-bottom: 0;
+                    border-radius: 100%;
+                    background: #FFFFFF;
+                    border: 1px solid transparent;
+                    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+                    cursor: pointer;
+                    font-weight: normal;
+                    transition: all 0.2s ease-in-out;
+                }
+
+                    .avatar-upload .avatar-edit input + label:hover {
+                        background: #f1f1f1;
+                        border-color: #d6d6d6;
+                    }
+
+                    .avatar-upload .avatar-edit input + label:after {
+                        content: "\f040";
+                        font-family: 'FontAwesome';
+                        color: #757575;
+                        position: absolute;
+                        top: 10px;
+                        left: 0;
+                        right: 0;
+                        text-align: center;
+                        margin: auto;
+                    }
+
+        .avatar-upload .avatar-preview {
+            width: 192px;
+            height: 192px;
+            position: relative;
+            border-radius: 100%;
+            border: 6px solid #F8F8F8;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+            .avatar-upload .avatar-preview > div {
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+    .list-group-item.active {
+        background: #b09d81 !important;
+    }
+    </style>
+
+
+
+<div class="container p-0 " dir="rtl">
+    <h1 class="h3 mb-3">@ViewData["Title"]</h1>
+    <div class="row">
+        <div class="col-md-5 col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Utility.GetTranslation("ProfileSettingsTitle")</h5>
+                </div>
+                <div class="list-group list-group-flush" role="tablist">
+                    <a class="list-group-item  list-group-item-action active"  style="border:none" data-toggle="list" href="#account" role="tab">
+                        @Utility.GetTranslation("AccountTab")
+                    </a>
+                    <a class="list-group-item list-group-item-action" style="border:none" data-toggle="list" href="#password" role="tab">
+                        @Utility.GetTranslation("PasswordTab")
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-xl-8">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                           @*  <div class="card-actions float-right">
+                                <div class="dropdown show">
+                                    <a href="#" data-toggle="dropdown" data-display="static">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                            <circle cx="12" cy="12" r="1"></circle>
+                                            <circle cx="19" cy="12" r="1"></circle>
+                                            <circle cx="5" cy="12" r="1"></circle>
+                                        </svg>
+                                    </a>
+                                
+                                </div>
+                            </div> *@
+                            <h5 class="card-title mb-0">@Utility.GetTranslation("GeneralInfoTitle")</h5>
+                        </div>
+                        <div class="card-body">
+                            <form asp-controller="Account" asp-action="UpdateUserInfo" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        @if (Model.UserInfo?.Role == Utility.Roles.Seller.ToString())
+                                        {
+                                            <div class="form-group">
+                                                <label asp-for="Biography" for="inputBio">@Utility.GetTranslation("BiographyLabel")</label>
+                                                <textarea asp-for="Biography" rows="2" class="form-control" id="inputBio" placeholder="@Utility.GetTranslation("TellAboutYourself")"></textarea>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="mt-2">
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input  name="file" type='file' id="imageUpload" />
+                                                        <label for="imageUpload"></label>
+                                                    </div>
+
+                                                    <div class="avatar-preview">
+                                                    
+                                                        <div id="imagePreview" style="background-image: url(@ViewBag.UserImage);">
+                                                            </div>
+                                                    
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <small class="text-muted">@Utility.GetTranslation("ImageSizeInfo")</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" style="border:none" class="btn btn-primary bg-tomato">@Utility.GetTranslation("SaveChangesButton")</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                          @*   <div class="card-actions float-right">
+                                <div class="dropdown show">
+                                    <a href="#" data-toggle="dropdown" data-display="static">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                            <circle cx="12" cy="12" r="1"></circle>
+                                            <circle cx="19" cy="12" r="1"></circle>
+                                            <circle cx="5" cy="12" r="1"></circle>
+                                        </svg>
+                                    </a>
+                                    <div class="text-black dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">@Utility.GetTranslation("Action")</a>
+                                        <a class="dropdown-item" href="#">@Utility.GetTranslation("AnotherAction")</a>
+                                        <a class="dropdown-item" href="#">@Utility.GetTranslation("SomethingElseHere")</a>
+                                    </div>
+                                </div>
+                            </div> *@
+                            <h5 class="card-title mb-0">@Utility.GetTranslation("PersonalInfoTitle")</h5>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="UpdateUserInfo" asp-controller="Account" method="post">
+                                <div class="form-group">
+                                    <label asp-for="UserInfo.Name" for="inputName">@Utility.GetTranslation("NameLabel")</label>
+                                    <input asp-for="UserInfo.Name" class="form-control" id="inputName" placeholder="@Utility.GetTranslation("FullName")">
+                                    <span asp-validation-for="UserInfo.Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="UserInfo.Email" for="inputEmail4">@Utility.GetTranslation("EmailLabel")</label>
+                                    <input asp-for="UserInfo.Email" type="email" class="form-control" id="inputEmail4" placeholder="@Utility.GetTranslation("EmailAddress")">
+                                    <span asp-validation-for="UserInfo.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="UserInfo.PhoneNumber" for="inputPhone">@Utility.GetTranslation("PhoneNumberLabel")</label>
+                                    <input asp-for="UserInfo.PhoneNumber" class="form-control" id="inputPhone" placeholder="@Utility.GetTranslation("MobileNumber")">
+                                    <span asp-validation-for="UserInfo.PhoneNumber" class="text-danger"></span>
+                                </div>
+  <button type="submit"  style ="border:none"class="bg-tomato   mt-3 btn btn-primary">@Utility.GetTranslation("SaveChangesButton")</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="password" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Utility.GetTranslation("PasswordChangeTitle")</h5>
+                            <form asp-action="ChangePassword" asp-controller="account" method="post">
+                                <div class="form-group">
+                                    <label asp-for="ChangePassword.CurrentPassword" for="inputPasswordCurrent">@Utility.GetTranslation("CurrentPasswordLabel")</label>
+                                    <input  asp-for ="ChangePassword.CurrentPassword" type="password" class="form-control" id="inputPasswordCurrent">
+                                    @*                                     <small><a href="#">@Utility.GetTranslation("ForgotPasswordLink")</a></small>
+                                    *@
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ChangePassword.NewPassword" for="inputPasswordNew">@Utility.GetTranslation("NewPasswordLabel")</label>
+                                    <input asp-for ="ChangePassword.NewPassword" type="password" class="form-control" id="inputPasswordNew">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ChangePassword.ConfirmPassword" for="inputPasswordNew2">@Utility.GetTranslation("ConfirmPasswordLabel")</label>
+                                    <input asp-for ="ChangePassword.ConfirmPassword" type="password" class="form-control" id="inputPasswordNew2">
+                                </div>
+                                <button style="border:none" type="submit" class="btn btn-primary bg-tomato mt-3">@Utility.GetTranslation("SaveChangesButton")</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js'></script>
+   <script type="text/javascript">
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#imagePreview").css(
+                    "background-image",
+                    "url(" + e.target.result + ")"
+                );
+                $("#imagePreview").hide();
+                $("#imagePreview").fadeIn(650);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function () {
+        readURL(this);
+    });
+    </script>
+   
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+

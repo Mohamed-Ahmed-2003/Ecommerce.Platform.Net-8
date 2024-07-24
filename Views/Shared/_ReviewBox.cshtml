@@ -1,0 +1,41 @@
+﻿@model OtlobLap.Models.Review
+
+<div id="review_@(Model.Id)" class="review-block m-2  @(Model.CustomerId == ViewBag.UserId ? "your-review" : "")">
+    <div class="row align-items-center">
+        <div class="col-sm-3">
+            <div class="review-block-name">
+                @if (Model.Customer != null && Model.CustomerId == ViewBag.UserId)
+                {
+                    <strong>أنت</strong>
+                    <div class="mt-3">
+                        <button class="btn btn-danger" title="ازالة" onclick="removeReview('@Model.Id')"><i class="fas fa-times"></i></button>
+                        <button onclick="PopulateUpdateModal(`@Model.Id`,`@ViewBag.UserId`,`@Model.ProductId`, `@Model.Rating`, `@Model.Title`, `@Model.Description`)" type="button" class="btn btn-primary" title="تعديل" data-bs-toggle="modal" data-bs-target="#updateReviewModal">
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                    </div>
+                }
+                else
+                {
+                    <strong>@Model.Customer?.Name</strong>
+                }
+            </div>
+            <div class="review-block-date">@Model.Date.ToShortDateString()</div>
+        </div>
+        <div class="col-sm-9 text-end">
+            <div class="review-block-rate" style="color: darkgoldenrod">
+                <div class="rate">
+                    @{
+                        for (int i = 5; i >= 1; i--)
+                        {
+                            <input type="radio" id="star@(i)" name="rate" value="@i" @(Model.Rating == i ? "checked" : "") disabled />
+                            <label for="star@(i)" title="text">@i stars</label>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="review-block-title">@Model.Title</div>
+            <div class="review-block-description">@Model.Description</div>
+        </div>
+    </div>
+</div>

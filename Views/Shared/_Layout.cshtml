@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="@ViewBag.Dir">
+<head>
+	<title>@Utility.GetTranslation("WebsiteTitle")</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	<meta name="description" content="The Mo eCommerce">
+	<meta name="keywords" content="mo, eCommerce, creative, html">
+	<!-- Favicon -->
+	<link href="~/Images/favicon.png" rel="shortcut icon" />
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+	<link rel="stylesheet" href="~/css/LayoutStyle.css" />
+	<link rel="stylesheet" href="~/css/animate.css" />
+	<link rel="stylesheet" href="~/OtlobLap.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rakkas&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Workbench&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"/>
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"/>
+
+	@await RenderSectionAsync("Styles", required: false)
+
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<!-- logo -->
+			<div class="site-logo" >
+				<img style=" width:5rem; height:5rem;" src="~/Images/logo.gif" alt="logo">
+			</div>
+
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<ul class="main-menu" >
+				@if (User.Identity.IsAuthenticated)
+				{
+
+					if (!string.IsNullOrEmpty(ViewBag.UserName))
+					{
+
+
+						<li class="nav-item dropdown">
+
+							<a class="nav-link dropdown-toggle " href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<img class="rounded-circle" width="40px" height="40px" style="object-fit:cover" src="@ViewBag.UserImage" alt="User Image" />
+								@Utility.GetTranslation("Welcome"), @ViewBag.UserName
+							</a>
+
+							<div class="dropdown-menu " dir="rtl" aria-labelledby="userDropdown">
+								<a class="dropdown-item" asp-action="Settings" asp-controller="Account">
+									<i class="fa-solid fa-gear"></i>
+									@Utility.GetTranslation("Settings")
+								</a>
+								@if (User.IsInRole("Customer"))
+								{
+									<a class="dropdown-item" asp-action="Index" asp-controller="Order">
+										<i class="fa-solid fa-money-bill-wave"></i>
+										@Utility.GetTranslation("Orders")
+									</a>
+								}
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" asp-action="Logout" asp-controller="Account">
+									<i class="fa-solid fa-right-to-bracket"></i>
+									@Utility.GetTranslation("Logout")
+								</a>
+							</div>
+						</li>
+
+					
+					}
+					else
+					{
+						<script>
+							window.location.href = '/Account/Logout';
+						</script>
+					}
+				}
+				else
+				{
+					<li class="nav-item">
+						<a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">@Utility.GetTranslation("Login")</a>
+					</li>
+				}
+
+
+				<li class="nav-item">
+					<a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">
+						<i class="fa-solid fa-house"></i>
+						@Utility.GetTranslation("Home Page")
+					</a>
+				</li>
+
+				@if (User.IsInRole(Utility.Roles.Seller.ToString()))
+				{
+					<li class="nav-item">
+						<a class="nav-link " asp-area="@Utility.Roles.Seller.ToString()" asp-controller="Home" asp-action="Index">@Utility.GetTranslation("Dashboard")</a>
+					</li>
+				}
+				else if (User.IsInRole(Utility.Roles.Admin.ToString()))
+				{
+					<li class="nav-item">
+						<a class="nav-link h3" asp-area="@Utility.Roles.Admin.ToString()" asp-controller="Home" asp-action="Index">@Utility.GetTranslation("Dashboard")</a>
+					</li>
+				}
+
+
+			</ul>
+			<div class="header-right d-flex align-items-center gap-5">
+				<div class="searchbar">
+					<input class="search_input" type="text" name="" placeholder="@Utility.GetTranslation("SearchPlaceHolder")">
+
+					<a id="search-btn" href="#" class="search_icon bg-tomato d-flex">
+						<i class="fas fa-search"></i>
+					</a>
+
+				</div>
+
+				@if (User.IsInRole("Customer"))
+				{
+					<div>
+
+				<a class=" nav-link  fa-solid fa-basket-shopping
+					h3" style="text - decoration:none; color:#b09d81" asp-controller="Cart" asp-action="Index"></a>
+					<a class="nav-link fa fa-regular fa-heart h3" style="text-decoration:none;color:#b09d81" asp-controller="Wishlist" asp-action="Index"></a>
+					</div>
+
+				}
+			
+				<partial name="_LanguageSelector" />
+			</div>
+		
+			<!-- site menu -->
+
+		</div>
+	</header>
+	<!-- Header section end -->
+	@RenderSection("SubHeader",false)
+
+
+
+    <!-- Hero section -->
+	@RenderSection("Featured",false)
+
+	<!-- Featured section end -->
+	<!-- Product section -->
+
+			<div class="container mt-3">
+				<main id="main" role="main" class="pb-3">
+
+					@RenderBody()
+				</main>
+			</div>
+	<!-- Product section end -->
+	<!-- Footer top section -->
+	<section class="footer-top-section home-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<img style=" width:5rem; height:5rem;" src="~/Images/logo.gif" alt="logo">
+
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-8 col-sm-12">
+					<div class="footer-widget about-widget">
+						<img src="img/logo.png" class="footer-logo" alt="">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc rhoncus.
+
+						</p>
+
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">@Utility.GetTranslation("usefullLinks")</h6>
+						<ul>
+							<li><a href="#">Partners</a></li>
+							<li><a href="#">Bloggers</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Press</a></li>
+						</ul>
+					</div>
+				</div>
+		
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">@Utility.GetTranslation("Shipping&Returns") </h6>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Track Orders</a></li>
+							<li><a href="#">Returns</a></li>
+							<li><a href="#">Jobs</a></li>
+							<li><a href="#">Shipping</a></li>
+							<li><a href="#">Blog</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="footer-widget">
+						<h6 class="fw-title">@Utility.GetTranslation("Contact")</h6>
+						<div class="text-box">
+							<p>@Utility.GetTranslation("MoEcommerce")</p>
+							<p><a href="https://wa.me/201069648570" target="_blank">+20 1069648570</a></p>
+							<a href="mailto:mo.19.ahmed.47@gmail.com" target="_blank">mo.19.ahmed.47@gmail.com</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</section>
+	@await RenderSectionAsync("Banners", false)
+
+	<!-- Footer top section end -->
+	<!-- Footer section -->
+	<!-- Footer section end -->
+	<!--====== Javascripts & Jquery ======-->
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.js"></script>
+	<script src="~/js/mixitup.min.js"></script>
+	<script src="~/js/sly.min.js"></script>
+	<script src="https://kit.fontawesome.com/fffef6c4ca.js" crossorigin="anonymous"></script>
+	<script src="~/lib/jquery/dist/jquery.nicescroll.min.js"></script>
+	<script src="~/js/main.js"></script>
+	<script src="~/js/site.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿@model OtlobLap.ViewModels.ProductVM
+
+<hr />
+
+<form asp-action="Create" asp-controller="Product" enctype="multipart/form-data">
+    <div class="row overflow-hidden" dir="rtl">
+        <div class="col-md-5">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Product.Name" class="control-label">@Utility.GetTranslation("ProductName")</label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.BrandId" class="control-label">@Utility.GetTranslation("Brand")</label>
+
+                <select asp-for="Product.BrandId" class="form-control text-black-50">
+                    <option value="">@Utility.GetTranslation("SelectBrand")</option>
+                    @if (ViewBag.Brands != null && ViewBag.Brands.Count > 0)
+                    {
+                        @foreach (var brand in ViewBag.Brands as List<Brand>)
+                        {
+                            <option  value="@brand.Id" >
+                                <span>@brand.Name</span>
+                            </option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="" disabled>@Utility.GetTranslation("NoBrands")</option>
+                    }
+                </select>
+
+                <span asp-validation-for="Product.Brand" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label">@Utility.GetTranslation("Price")</label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.AvailableInStock" class="control-label">@Utility.GetTranslation("AvailableInStock")</label>
+                <input multiple asp-for="Product.AvailableInStock" class="form-control" />
+                <span asp-validation-for="Product.AvailableInStock" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Categories" class="control-label">@Utility.GetTranslation("CategoriesTitle")</label>
+                <select asp-for="Categories" asp-items="ViewBag.CategoryID" id="choices-multiple-remove-button" class="form-control" placeholder="حدد فئة بحد اقصي 5" multiple></select>
+            </div>
+
+         
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Product.ShortDescription" class="control-label">@Utility.GetTranslation("ShortDescription")</label>
+                <textarea maxlength="100" style="resize: none;" class="form-control" asp-for="Product.ShortDescription"></textarea>
+                <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MainProductImage" class="control-label">@Utility.GetTranslation("MainImageLabel")</label>
+                <input type="file" id="MainProductImage" asp-for="MainProductImage" class="form-control" />
+                <span asp-validation-for="MainProductImage" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductImages" class="control-label">@Utility.GetTranslation("AdditionalImagesLabel")</label>
+                <input multiple type="file" id="ProductImages" asp-for="ProductImages" class="form-control" />
+                <span asp-validation-for="ProductImages" class="text-danger"></span>
+            </div>
+
+            <div id="MainImagePreview" class="d-flex flex-wrap gap-2">
+            </div>
+
+            <div id="imagePreview" class="d-flex flex-wrap gap-2">
+            </div>
+        
+        </div>
+
+        
+
+        <div class="form-group">
+            <label asp-for="Product.Description" class="control-label">@Utility.GetTranslation("Description")</label>
+            <textarea style="resize: none;" asp-for="Product.Description" class="tiny"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group m-5 d-flex justify-content-center">
+            <input type="submit" value="@Utility.GetTranslation("Add")" class="btn btn-primary" />
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.5/tinymce.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true,
+                maxItemCount: 5,
+                searchResultLimit: 5,
+                renderChoiceLimit: 5
+            });
+
+
+        });
+
+
+
+        function readURL(input,Preview) {
+            if (input.files && input.files.length > 0) {
+                $(Preview).empty(); // Clear existing images
+
+                Array.from(input.files).forEach(function (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var image = $("<img>")
+                            .attr("src", e.target.result)
+                            .css({ "max-width": "100px", "max-height": "100px", "margin": "5px" });
+                        $(Preview).append(image);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        $("#ProductImages").change(function () {
+            readURL(this, "#imagePreview");
+        });
+
+        $("#MainProductImage").change(function () {
+            readURL(this, "#MainImagePreview");
+        });
+
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

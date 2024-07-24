@@ -1,0 +1,36 @@
+﻿@model IdentityRole<int>
+
+<tr id="@Model.Id">
+    <td>
+       @Model.Name
+    </td>
+    <td>
+        @Model.Id
+    </td>
+    <td class="text-end">
+        <div class="btn-group">
+            <button type="button" style="background-color:#4154f1" class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                @Utility.GetTranslation("Actions")
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" style="cursor:pointer" asp-action="Index" asp-controller="Permissions" asp-route-roleId ="@Model.Id">
+                        <i class="bi bi-key"></i> @Utility.GetTranslation("Permissions")
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editRoleModal" style="cursor:pointer"  onclick='fillEditModal("@Model.Name","@Model.Id")'>
+                        <i class="bi bi-pencil"></i> @Utility.GetTranslation("EditButton")
+                    </a>
+                </li> 
+             
+                <li>
+                    <a style="cursor:pointer"  class="dropdown-item" onclick='deleteRole("@Model.Id")'>
+                        <i class="bi bi-trash"></i> @Utility.GetTranslation("DeleteButton")
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </td>
+</tr>

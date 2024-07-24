@@ -1,0 +1,939 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>关于我们</value>
+  </data>
+  <data name="AccessDeniedMesg" xml:space="preserve">
+    <value>您无权访问此处。</value>
+  </data>
+  <data name="AccountTab" xml:space="preserve">
+    <value>算术</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>事件</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>积极</value>
+  </data>
+  <data name="ActiveHeader" xml:space="preserve">
+    <value>利用</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>加</value>
+  </data>
+  <data name="AddBanner" xml:space="preserve">
+    <value>添加封面</value>
+  </data>
+  <data name="AddBrand" xml:space="preserve">
+    <value>添加商标</value>
+  </data>
+  <data name="AddButton" xml:space="preserve">
+    <value>添加 +</value>
+  </data>
+  <data name="AddCategoryTitle" xml:space="preserve">
+    <value>添加部分</value>
+  </data>
+  <data name="AddDiscountButton" xml:space="preserve">
+    <value>添加 +</value>
+  </data>
+  <data name="AddDiscountTitle" xml:space="preserve">
+    <value>添加折扣</value>
+  </data>
+  <data name="AdditionalImagesLabel" xml:space="preserve">
+    <value>其他图片</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>添加新类别</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>添加产品 +</value>
+  </data>
+  <data name="AddRole" xml:space="preserve">
+    <value>添加新角色 +</value>
+  </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>加入购物车</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>添加新用户</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>导演</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>管理控制面板</value>
+  </data>
+  <data name="AfterDiscountLabel" xml:space="preserve">
+    <value>折扣后</value>
+  </data>
+  <data name="AllRightsReserved" xml:space="preserve">
+    <value>版权所有</value>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>交货日期</value>
+  </data>
+  <data name="Arrived" xml:space="preserve">
+    <value>顺利到达</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>可用</value>
+  </data>
+  <data name="AvailableInStock" xml:space="preserve">
+    <value>有货</value>
+  </data>
+  <data name="AvailableProductsTitle" xml:space="preserve">
+    <value>可用产品</value>
+  </data>
+  <data name="AverageRating" xml:space="preserve">
+    <value>最受好评</value>
+  </data>
+  <data name="AvgRating" xml:space="preserve">
+    <value>平均评分</value>
+  </data>
+  <data name="BackToListLink" xml:space="preserve">
+    <value>返回菜单</value>
+  </data>
+  <data name="BackToProductsLink" xml:space="preserve">
+    <value>返回您的产品</value>
+  </data>
+  <data name="BackToShopping" xml:space="preserve">
+    <value>返回购物</value>
+  </data>
+  <data name="BannerImage" xml:space="preserve">
+    <value>封面照</value>
+  </data>
+  <data name="Banners" xml:space="preserve">
+    <value> 广告 牌</value>
+  </data>
+  <data name="BannerUrl" xml:space="preserve">
+    <value>完整链接</value>
+  </data>
+  <data name="BestSellers" xml:space="preserve">
+    <value>顶级销售</value>
+  </data>
+  <data name="BiographyLabel" xml:space="preserve">
+    <value>传记</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>禁止</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>品牌</value>
+  </data>
+  <data name="BrandImage" xml:space="preserve">
+    <value>品牌形象</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>商标</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>废除</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>废除</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>车</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>类别</value>
+  </data>
+  <data name="CategoriesTitle" xml:space="preserve">
+    <value>部分</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>部分</value>
+  </data>
+  <data name="CategoryName" xml:space="preserve">
+    <value>类别名称</value>
+  </data>
+  <data name="CategoryNameLabel" xml:space="preserve">
+    <value>部门名称</value>
+  </data>
+  <data name="CategoryTitle" xml:space="preserve">
+    <value>部分</value>
+  </data>
+  <data name="CheckoutButton" xml:space="preserve">
+    <value>推进力</value>
+  </data>
+  <data name="CheckoutFailedMesg" xml:space="preserve">
+    <value>对不起！付款时似乎有问题。请重试或联系支持人员寻求帮助。</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CompletedOrders" xml:space="preserve">
+    <value>已完成的申请</value>
+  </data>
+  <data name="ConfirmButton" xml:space="preserve">
+    <value>肯定</value>
+  </data>
+  <data name="ConfirmDeleteBanner" xml:space="preserve">
+    <value>你确定要删除这个封面吗？无法再次检索</value>
+  </data>
+  <data name="ConfirmDeleteBrand" xml:space="preserve">
+    <value>您确定要删除此品牌吗？</value>
+  </data>
+  <data name="ConfirmDeleteCategory" xml:space="preserve">
+    <value>您确定该类别已删除吗？</value>
+  </data>
+  <data name="ConfirmHideProduct" xml:space="preserve">
+    <value>您确定要隐藏此产品吗？</value>
+  </data>
+  <data name="ConfirmLockUser" xml:space="preserve">
+    <value>您确定此用户已被阻止吗？</value>
+  </data>
+  <data name="ConfirmMesg" xml:space="preserve">
+    <value>是否确定？</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="ConfirmPasswordLabel" xml:space="preserve">
+    <value>确认新密码</value>
+  </data>
+  <data name="ConfirmPremiumProduct" xml:space="preserve">
+    <value>您确定将这款产品与高品质区分开来吗？</value>
+  </data>
+  <data name="ConfirmProductDelete" xml:space="preserve">
+    <value>是否确实要删除此产品？</value>
+  </data>
+  <data name="ConfirmReleaseFromPremium" xml:space="preserve">
+    <value>您确定此产品将从令牌中删除吗？</value>
+  </data>
+  <data name="ConfirmShowProduct" xml:space="preserve">
+    <value>您确定要展示此产品吗？</value>
+  </data>
+  <data name="ConfirmUnlockUser" xml:space="preserve">
+    <value>是否确实要重新激活用户帐户？</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>社交媒体</value>
+  </data>
+  <data name="ControlPanel" xml:space="preserve">
+    <value>控制面板</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>版权 ©</value>
+  </data>
+  <data name="CurrentPasswordLabel" xml:space="preserve">
+    <value>当前密码</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="CustomerInterface" xml:space="preserve">
+    <value>客户界面</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>客户名称</value>
+  </data>
+  <data name="CustomersCount" xml:space="preserve">
+    <value>客户数量</value>
+  </data>
+  <data name="CustomersTitle" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>控制面板</value>
+  </data>
+  <data name="DashboardTitle" xml:space="preserve">
+    <value>控制面板</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>数据</value>
+  </data>
+  <data name="DateAdded" xml:space="preserve">
+    <value>后</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteBanner" xml:space="preserve">
+    <value>删除封面</value>
+  </data>
+  <data name="DeleteBrand" xml:space="preserve">
+    <value>删除商标</value>
+  </data>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteConfirmation" xml:space="preserve">
+    <value>您确定要删除此内容吗？</value>
+  </data>
+  <data name="DeleteUserConfirm" xml:space="preserve">
+    <value>您确定此用户已删除吗？无法再次检索</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="DesignedBy" xml:space="preserve">
+    <value>设计制作</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>详</value>
+  </data>
+  <data name="DetailsButton" xml:space="preserve">
+    <value>详</value>
+  </data>
+  <data name="Discount%" xml:space="preserve">
+    <value>减少</value>
+  </data>
+  <data name="DiscountLabel" xml:space="preserve">
+    <value>折扣</value>
+  </data>
+  <data name="DiscountPercentageHeader" xml:space="preserve">
+    <value>减少百分比</value>
+  </data>
+  <data name="Discounts" xml:space="preserve">
+    <value>扣除</value>
+  </data>
+  <data name="DiscountsTitle" xml:space="preserve">
+    <value>提供</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>调制</value>
+  </data>
+  <data name="EditBanner" xml:space="preserve">
+    <value>盖板调整</value>
+  </data>
+  <data name="EditButton" xml:space="preserve">
+    <value>调制</value>
+  </data>
+  <data name="EditHeader" xml:space="preserve">
+    <value>调制</value>
+  </data>
+  <data name="EditRole" xml:space="preserve">
+    <value>修改角色</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>电子邮件地址</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>有效期</value>
+  </data>
+  <data name="EndLockoutDate" xml:space="preserve">
+    <value>封禁结束日期</value>
+  </data>
+  <data name="EnterPromoCode" xml:space="preserve">
+    <value>输入验证码</value>
+  </data>
+  <data name="ExpiredProductsTitle" xml:space="preserve">
+    <value>成品</value>
+  </data>
+  <data name="FilterHeader" xml:space="preserve">
+    <value>滤波器</value>
+  </data>
+  <data name="FilterOptionThisMonth" xml:space="preserve">
+    <value>本月</value>
+  </data>
+  <data name="FilterOptionThisYear" xml:space="preserve">
+    <value>今年</value>
+  </data>
+  <data name="FilterOptionToday" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="ForgotPasswordLink" xml:space="preserve">
+    <value>忘记密码？</value>
+  </data>
+  <data name="Free Delivery" xml:space="preserve">
+    <value>免费送货</value>
+  </data>
+  <data name="FreeShipping" xml:space="preserve">
+    <value>免费送货</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>全名</value>
+  </data>
+  <data name="GeneralInfoTitle" xml:space="preserve">
+    <value>一般信息</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>转到</value>
+  </data>
+  <data name="GoHome" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="GoToCart" xml:space="preserve">
+    <value>前往购物车</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
+  <data name="HiddenProduct" xml:space="preserve">
+    <value>遮罩产品</value>
+  </data>
+  <data name="HiddenProducts" xml:space="preserve">
+    <value>隐藏产品</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="HomeReturn" xml:space="preserve">
+    <value>!主页</value>
+  </data>
+  <data name="ImageSizeInfo" xml:space="preserve">
+    <value>为获得最佳效果，请使用至少 128 × 128 像素的.jpg格式图像</value>
+  </data>
+  <data name="Increase" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>提供</value>
+  </data>
+  <data name="ItemsLabel" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>禁运</value>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>禁止</value>
+  </data>
+  <data name="LockUser" xml:space="preserve">
+    <value>阻止用户</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="MainImageLabel" xml:space="preserve">
+    <value>主图片</value>
+  </data>
+  <data name="MainProductImage" xml:space="preserve">
+    <value>主要产品图片</value>
+  </data>
+  <data name="ManageRole" xml:space="preserve">
+    <value>管理其有效性</value>
+  </data>
+  <data name="MoEcommerce" xml:space="preserve">
+    <value>莫电子商务</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>名字</value>
+  </data>
+  <data name="NeedHelp" xml:space="preserve">
+    <value>需要帮助吗？</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新增功能</value>
+  </data>
+  <data name="NewArrivals" xml:space="preserve">
+    <value>最新产品</value>
+  </data>
+  <data name="NewOrders" xml:space="preserve">
+    <value>新订单</value>
+  </data>
+  <data name="NewPasswordLabel" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>下一个</value>
+  </data>
+  <data name="NoCategoryProducts" xml:space="preserve">
+    <value>此部分内还没有产品！🙃🙃</value>
+  </data>
+  <data name="NoDiscountsMessage" xml:space="preserve">
+    <value>你没有添加任何折扣，守财奴。</value>
+  </data>
+  <data name="NoItemsInCartMessage" xml:space="preserve">
+    <value>篮子😒😒😒里没有物品。</value>
+  </data>
+  <data name="NoItemsMessage" xml:space="preserve">
+    <value>购物车中没有商品</value>
+  </data>
+  <data name="NoOrdersMessage" xml:space="preserve">
+    <value>暂无请求</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>您的奇妙搜索没有结果</value>
+  </data>
+  <data name="NoReviews" xml:space="preserve">
+    <value>此产品没有评论。</value>
+  </data>
+  <data name="NoWishlistProducts" xml:space="preserve">
+    <value>没有喜欢😒😒😒的产品。</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>订单日期</value>
+  </data>
+  <data name="OrderListTitle" xml:space="preserve">
+    <value>订单清单</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>请求</value>
+  </data>
+  <data name="OrdersCount" xml:space="preserve">
+    <value>订单数量</value>
+  </data>
+  <data name="OrdersInProgress" xml:space="preserve">
+    <value>正在交付的订单</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>订单状态</value>
+  </data>
+  <data name="Out of Stock" xml:space="preserve">
+    <value>不能利用的</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="PasswordChangeTitle" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="PasswordTab" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="PercentageLabel" xml:space="preserve">
+    <value>减少百分比</value>
+  </data>
+  <data name="PercentageSymbol" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>权限</value>
+  </data>
+  <data name="PersonalInfoTitle" xml:space="preserve">
+    <value>个人信息</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>移动电话</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>电话号码</value>
+  </data>
+  <data name="Pieces" xml:space="preserve">
+    <value>块</value>
+  </data>
+  <data name="PrdouctsManagement" xml:space="preserve">
+    <value>产品管理</value>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>高品质</value>
+  </data>
+  <data name="PremiumProduct" xml:space="preserve">
+    <value>高品质产品</value>
+  </data>
+  <data name="PremiumProducts" xml:space="preserve">
+    <value>高品质产品</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>以前</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>价格</value>
+  </data>
+  <data name="PriceOrderAsc" xml:space="preserve">
+    <value>价格顺序升序</value>
+  </data>
+  <data name="PriceOrderDesc" xml:space="preserve">
+    <value>价格降序</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>隐私</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>产品</value>
+  </data>
+  <data name="Product Details" xml:space="preserve">
+    <value>产品详情</value>
+  </data>
+  <data name="ProductCategories" xml:space="preserve">
+    <value>产品分类</value>
+  </data>
+  <data name="ProductImage" xml:space="preserve">
+    <value>产品图片</value>
+  </data>
+  <data name="ProductImages" xml:space="preserve">
+    <value>产品图片</value>
+  </data>
+  <data name="ProductListTitle" xml:space="preserve">
+    <value>产品展示</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>产品名称</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>产品</value>
+  </data>
+  <data name="ProductsCount" xml:space="preserve">
+    <value>产品数量</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>轮廓</value>
+  </data>
+  <data name="ProfileSettingsTitle" xml:space="preserve">
+    <value>配置文件设置</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>量</value>
+  </data>
+  <data name="Rate the Product" xml:space="preserve">
+    <value>产品价值</value>
+  </data>
+  <data name="RecentSalesTitle" xml:space="preserve">
+    <value>近期销售</value>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>推荐</value>
+  </data>
+  <data name="RegisterUser" xml:space="preserve">
+    <value>添加用户</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>创建一个新帐户</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>未收到</value>
+  </data>
+  <data name="ReleaseFromPremium" xml:space="preserve">
+    <value>从墓碑中删除</value>
+  </data>
+  <data name="Remaining" xml:space="preserve">
+    <value>剩余</value>
+  </data>
+  <data name="RemainingEndDateHeader" xml:space="preserve">
+    <value>完成时剩余</value>
+  </data>
+  <data name="RevenueTitle" xml:space="preserve">
+    <value>收入</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>评论</value>
+  </data>
+  <data name="ReviewsTitle" xml:space="preserve">
+    <value>评论</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>有效性</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>角色名称</value>
+  </data>
+  <data name="RolesCount" xml:space="preserve">
+    <value>权力</value>
+  </data>
+  <data name="RolesManagement" xml:space="preserve">
+    <value>电源管理</value>
+  </data>
+  <data name="SalesTitle" xml:space="preserve">
+    <value>销售</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保护</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>保护</value>
+  </data>
+  <data name="SaveChangesButton" xml:space="preserve">
+    <value>保存更改</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SearchPlaceHolder" xml:space="preserve">
+    <value>你在找什么？🤔</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="Select a Language" xml:space="preserve">
+    <value>选择网站的语言</value>
+  </data>
+  <data name="SelectBrand" xml:space="preserve">
+    <value>选择商标</value>
+  </data>
+  <data name="SelectProductLabel" xml:space="preserve">
+    <value>产品标识</value>
+  </data>
+  <data name="SelectRole" xml:space="preserve">
+    <value>选择用户的角色：</value>
+  </data>
+  <data name="Seller" xml:space="preserve">
+    <value>供应商</value>
+  </data>
+  <data name="SellerID" xml:space="preserve">
+    <value>供应商 ID</value>
+  </data>
+  <data name="SellerInfoTitle" xml:space="preserve">
+    <value>供应商信息</value>
+  </data>
+  <data name="SellerName" xml:space="preserve">
+    <value>卖家名称</value>
+  </data>
+  <data name="SellersCount" xml:space="preserve">
+    <value>卖家数量</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Shipping&amp;Returns" xml:space="preserve">
+    <value>运输和退货</value>
+  </data>
+  <data name="Shopping" xml:space="preserve">
+    <value>购物</value>
+  </data>
+  <data name="ShoppingCartItems" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="ShoppingCartTitle" xml:space="preserve">
+    <value>购物车</value>
+  </data>
+  <data name="ShoppingNow" xml:space="preserve">
+    <value>立即购买</value>
+  </data>
+  <data name="Short Description" xml:space="preserve">
+    <value>简短描述</value>
+  </data>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>简短描述</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>显示</value>
+  </data>
+  <data name="ShownResults" xml:space="preserve">
+    <value>显示的结果</value>
+  </data>
+  <data name="ShowProduct" xml:space="preserve">
+    <value>显示产品</value>
+  </data>
+  <data name="Similar Products" xml:space="preserve">
+    <value>类似产品</value>
+  </data>
+  <data name="Sold by" xml:space="preserve">
+    <value>出售者</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>排序方式</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>地位</value>
+  </data>
+  <data name="Submit Review" xml:space="preserve">
+    <value>发送评论</value>
+  </data>
+  <data name="SummaryTitle" xml:space="preserve">
+    <value>总结</value>
+  </data>
+  <data name="TellAboutYourself" xml:space="preserve">
+    <value>介绍你自己</value>
+  </data>
+  <data name="This is your product" xml:space="preserve">
+    <value>这是你自己的产品</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>地址</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="TopOffers" xml:space="preserve">
+    <value>最大折扣</value>
+  </data>
+  <data name="TopSellersbyRevenue" xml:space="preserve">
+    <value>最赚钱的卖家</value>
+  </data>
+  <data name="TopSellersRated" xml:space="preserve">
+    <value>最受好评的卖家</value>
+  </data>
+  <data name="TopSellingTitle" xml:space="preserve">
+    <value>畅销书</value>
+  </data>
+  <data name="TotalCategories" xml:space="preserve">
+    <value>部门数量</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>总</value>
+  </data>
+  <data name="TotalRevenue" xml:space="preserve">
+    <value>毛利</value>
+  </data>
+  <data name="TotalReviews" xml:space="preserve">
+    <value>评论数量</value>
+  </data>
+  <data name="TotalReviewsTitle" xml:space="preserve">
+    <value>您获得的总评论</value>
+  </data>
+  <data name="TotalSales" xml:space="preserve">
+    <value>销售数量</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>解除禁令</value>
+  </data>
+  <data name="UnlockUser" xml:space="preserve">
+    <value>取消阻止用户</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>修改用户数据</value>
+  </data>
+  <data name="UpdateUserRole" xml:space="preserve">
+    <value>更改用户角色</value>
+  </data>
+  <data name="UploadImageLabel" xml:space="preserve">
+    <value>上传图片</value>
+  </data>
+  <data name="usefullLinks" xml:space="preserve">
+    <value>相关链接</value>
+  </data>
+  <data name="UserImage" xml:space="preserve">
+    <value>用户图片</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>用户管理</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="WebsiteTitle" xml:space="preserve">
+    <value>要求一些东西</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>你好</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>你好， {0}</value>
+  </data>
+  <data name="Wishlist" xml:space="preserve">
+    <value>收藏 夹</value>
+  </data>
+  <data name="WishlistProductsCount" xml:space="preserve">
+    <value>最喜欢的产品</value>
+  </data>
+  <data name="WishlistTitle" xml:space="preserve">
+    <value>首选产品</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是的</value>
+  </data>
+</root>

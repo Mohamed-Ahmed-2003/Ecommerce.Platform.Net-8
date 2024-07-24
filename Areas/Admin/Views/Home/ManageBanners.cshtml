@@ -1,0 +1,195 @@
+﻿@model ManageBannersVM 
+
+<button type="button" data-bs-toggle="modal" data-bs-target="#AddBannerModal" class="btn btn-primary w-auto">
+    <span class="bi bi-plus"></span> @Utility.GetTranslation("AddBanner")
+</button>
+
+<table class="table table-striped datatable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Utility.GetTranslation("Image")</th>
+            @* <th>@Utility.GetTranslation("Description")</th> *@
+            <th>@Utility.GetTranslation("BannerUrl")</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var banner in Model.Banners)
+        {
+            <tr>
+                <td>@banner.Id</td>
+                <td><img src="~/Images/Banners/@banner.ImageUrl" alt="Cover Image" class="img-fluid" style="max-width: 100px;" /></td>
+                @* <td >@Html.Raw(banner.Description)</td> *@
+                <td>
+                    <a class="bi bi-link h1" target="_blank" href="@banner.Link"></a>
+
+            </td>
+   <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+
+                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#EditBannerModal" onclick="fillEditBanModal(`@banner.Id`, `/Images/Banners/@banner.ImageUrl`, `@banner.Description`, `@banner.Link`)">
+                                    <span class="bi bi-pencil"></span>
+                                    @Utility.GetTranslation("Edit")</button>
+
+                            </li>
+                       
+                            <li>
+                                <a href="#DeleteBannerModal" onclick="fillDeleteBannerModel(@banner.Id)" class="dropdown-item" data-bs-toggle="modal">
+                                    <span class="bi bi-trash text-danger"></span>
+                                    @Utility.GetTranslation("Delete")
+                                 </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="AddBannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("AddBanner")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addBannerForm" method="post" enctype="multipart/form-data" asp-action="AddBanner" asp-controller="Home">
+                    <div class="mb-3">
+                        <label for="bannerImage" class="form-label">@Utility.GetTranslation("BannerImage")</label>
+                        <input type="file" class="form-control" id="bannerImage" asp-for="BannerVM.ImageFile" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div class="mb-3">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="width: 100%; height: 40rem;object-fit:fill; display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="BannerVM.Description" class="control-label">@Utility.GetTranslation("Description")</label>
+                        <textarea style="resize: none;" asp-for="BannerVM.Description" class="tiny"></textarea>
+                        <span asp-validation-for="BannerVM.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bannerLinkUrl" class="form-label">@Utility.GetTranslation("BannerUrl")</label>
+                        <input  type="url" asp-for="BannerVM.LinkUrl" type="text" class="form-control" id="bannerLinkUrl" >
+                    </div>
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("AddBanner")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditBannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("EditBanner")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editBannerForm" method="post" enctype="multipart/form-data" asp-action="EditBanner" asp-controller="Home">
+                    <input type="hidden" id="BannerId" asp-for="BannerVM.Id" />
+                    <div class="mb-3">
+                        <label for="editBannerImage" class="form-label">@Utility.GetTranslation("BannerImage")</label>
+                        <input type="file" class="form-control" id="editBannerImage" asp-for="BannerVM.ImageFile" accept="image/*" onchange="previewEditImage(event)"/>
+                    </div>
+                    <div class="mb-3">
+                        <img id="editImagePreview" src="#" alt="Image Preview" style="width: 100%; height: 40rem;object-fit:fill; display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="BannerVM.Description" class="control-label">@Utility.GetTranslation("Description")</label>
+                        <textarea style="resize: none;" asp-for="BannerVM.Description" class="tiny"></textarea>
+
+                        <span asp-validation-for="BannerVM.Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editBannerLinkUrl" class="form-label">@Utility.GetTranslation("BannerUrl")</label>
+                        <input type="url" asp-for="BannerVM.LinkUrl" type="text" class="form-control" id="editBannerLinkUrl" >
+                    </div>
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteBannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("DeleteBanner")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form asp-action="DeleteBanner" asp-controller="Home">
+            <div class="modal-body">
+
+                <p>@Utility.GetTranslation("ConfirmDeleteBanner")</p>
+                    <input name="bannerId" type="hidden" id="bannerIdToDelete" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                <button type="submit" class="btn btn-danger" id="confirmDelete">@Utility.GetTranslation("Delete")</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.5/tinymce.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true,
+                maxItemCount: 5,
+                searchResultLimit: 5,
+                renderChoiceLimit: 5
+            });
+        });
+
+      
+
+
+        function fillEditBanModal(BannerId, ImageUrl, Description, LinkUrl) {
+            $('#EditBannerModal #BannerId').val(BannerId);
+            $('#EditBannerModal #editImagePreview').attr('src',  ImageUrl).show();
+            tinymce.activeEditor.setContent(Description, { format: 'raw' });
+            $('#EditBannerModal #editBannerLinkUrl').val(LinkUrl);
+
+          
+
+            // Show the modal
+            $('#EditBannerModal').modal('show');
+        }
+        function fillDeleteBannerModel(bannerId) {
+            $('#bannerIdToDelete').val(bannerId);
+        }
+        function previewImage(event) {
+        var input = event.target;
+        var imagePreview = document.getElementById('imagePreview');
+        imagePreview.style.display = 'block';
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataURL = reader.result;
+            imagePreview.src = dataURL;
+        };
+        reader.readAsDataURL(input.files[0]);
+
+    }
+</script>
+
+    }

@@ -1,0 +1,939 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>我々について</value>
+  </data>
+  <data name="AccessDeniedMesg" xml:space="preserve">
+    <value>ここにはアクセスできません。</value>
+  </data>
+  <data name="AccountTab" xml:space="preserve">
+    <value>算数</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>出来事</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>能動</value>
+  </data>
+  <data name="ActiveHeader" xml:space="preserve">
+    <value>馬具</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>足す</value>
+  </data>
+  <data name="AddBanner" xml:space="preserve">
+    <value>カバーを追加</value>
+  </data>
+  <data name="AddBrand" xml:space="preserve">
+    <value>商標を追加</value>
+  </data>
+  <data name="AddButton" xml:space="preserve">
+    <value>+ を追加</value>
+  </data>
+  <data name="AddCategoryTitle" xml:space="preserve">
+    <value>+ を追加</value>
+  </data>
+  <data name="AddDiscountButton" xml:space="preserve">
+    <value>#NAME?</value>
+  </data>
+  <data name="AddDiscountTitle" xml:space="preserve">
+    <value>ディスカウントを追加する</value>
+  </data>
+  <data name="AdditionalImagesLabel" xml:space="preserve">
+    <value>その他の画像</value>
+  </data>
+  <data name="AddNewCategory" xml:space="preserve">
+    <value>新しいカテゴリを追加する</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>製品を追加 +</value>
+  </data>
+  <data name="AddRole" xml:space="preserve">
+    <value>新しいロールを追加 +</value>
+  </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>お買い物カゴに追加</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>新しいユーザーを追加する</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>ディレクター</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>管理コントロールパネル</value>
+  </data>
+  <data name="AfterDiscountLabel" xml:space="preserve">
+    <value>割引後</value>
+  </data>
+  <data name="AllRightsReserved" xml:space="preserve">
+    <value>無断複写・転載を禁じます</value>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>納期</value>
+  </data>
+  <data name="Arrived" xml:space="preserve">
+    <value>正常に到着しました</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>利用できる</value>
+  </data>
+  <data name="AvailableInStock" xml:space="preserve">
+    <value>在庫あり</value>
+  </data>
+  <data name="AvailableProductsTitle" xml:space="preserve">
+    <value>入手可能な製品</value>
+  </data>
+  <data name="AverageRating" xml:space="preserve">
+    <value>最高評価</value>
+  </data>
+  <data name="AvgRating" xml:space="preserve">
+    <value>平均評価</value>
+  </data>
+  <data name="BackToListLink" xml:space="preserve">
+    <value>メニューへ戻る</value>
+  </data>
+  <data name="BackToProductsLink" xml:space="preserve">
+    <value>製品一覧へ戻る</value>
+  </data>
+  <data name="BackToShopping" xml:space="preserve">
+    <value>ショッピングに戻る</value>
+  </data>
+  <data name="BannerImage" xml:space="preserve">
+    <value>カバー写真</value>
+  </data>
+  <data name="Banners" xml:space="preserve">
+    <value> 看板</value>
+  </data>
+  <data name="BannerUrl" xml:space="preserve">
+    <value>フルリンク</value>
+  </data>
+  <data name="BestSellers" xml:space="preserve">
+    <value>トップセールス</value>
+  </data>
+  <data name="BiographyLabel" xml:space="preserve">
+    <value>伝記</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>禁じられた</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>ブランド</value>
+  </data>
+  <data name="BrandImage" xml:space="preserve">
+    <value>ブランドイメージ</value>
+  </data>
+  <data name="Brands" xml:space="preserve">
+    <value>商標</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>廃止</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>廃止</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>カート</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="CategoriesTitle" xml:space="preserve">
+    <value>セクション</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>節</value>
+  </data>
+  <data name="CategoryName" xml:space="preserve">
+    <value>カテゴリ名</value>
+  </data>
+  <data name="CategoryNameLabel" xml:space="preserve">
+    <value>部署名</value>
+  </data>
+  <data name="CategoryTitle" xml:space="preserve">
+    <value>節</value>
+  </data>
+  <data name="CheckoutButton" xml:space="preserve">
+    <value>推進</value>
+  </data>
+  <data name="CheckoutFailedMesg" xml:space="preserve">
+    <value>すみません！支払い時に問題があるようです。もう一度お試しいただくか、サポートにお問い合わせください。</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>閉会</value>
+  </data>
+  <data name="CompletedOrders" xml:space="preserve">
+    <value>完成したアプリケーション</value>
+  </data>
+  <data name="ConfirmButton" xml:space="preserve">
+    <value>肯定</value>
+  </data>
+  <data name="ConfirmDeleteBanner" xml:space="preserve">
+    <value>このカバーを削除してもよろしいですか?再度取得することはできません</value>
+  </data>
+  <data name="ConfirmDeleteBrand" xml:space="preserve">
+    <value>このブランドを削除してもよろしいですか?</value>
+  </data>
+  <data name="ConfirmDeleteCategory" xml:space="preserve">
+    <value>カテゴリが削除されてもよろしいですか?</value>
+  </data>
+  <data name="ConfirmHideProduct" xml:space="preserve">
+    <value>この製品を非表示にしてもよろしいですか?</value>
+  </data>
+  <data name="ConfirmLockUser" xml:space="preserve">
+    <value>このユーザーはブロックされていますか?</value>
+  </data>
+  <data name="ConfirmMesg" xml:space="preserve">
+    <value>確かですか。</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>パスワードの確認</value>
+  </data>
+  <data name="ConfirmPasswordLabel" xml:space="preserve">
+    <value>新しいパスワードの確認</value>
+  </data>
+  <data name="ConfirmPremiumProduct" xml:space="preserve">
+    <value>この製品を高品質で区別して間違いありませんか?</value>
+  </data>
+  <data name="ConfirmProductDelete" xml:space="preserve">
+    <value>この製品を削除してもよろしいですか?</value>
+  </data>
+  <data name="ConfirmReleaseFromPremium" xml:space="preserve">
+    <value>この製品はトークンから削除されますか?</value>
+  </data>
+  <data name="ConfirmShowProduct" xml:space="preserve">
+    <value>この商品を表示してもよろしいですか?</value>
+  </data>
+  <data name="ConfirmUnlockUser" xml:space="preserve">
+    <value>ユーザー アカウントを再アクティブ化してもよろしいですか?</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>ソーシャルメディア</value>
+  </data>
+  <data name="ControlPanel" xml:space="preserve">
+    <value>コントロールパネル</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>著作権 ©</value>
+  </data>
+  <data name="CurrentPasswordLabel" xml:space="preserve">
+    <value>現在のパスワード</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>クライアント</value>
+  </data>
+  <data name="CustomerInterface" xml:space="preserve">
+    <value>カスタマインターフェース</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>お客様のお名前</value>
+  </data>
+  <data name="CustomersCount" xml:space="preserve">
+    <value>顧客数</value>
+  </data>
+  <data name="CustomersTitle" xml:space="preserve">
+    <value>顧客</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>コントロールパネル</value>
+  </data>
+  <data name="DashboardTitle" xml:space="preserve">
+    <value>コントロールパネル</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>データ</value>
+  </data>
+  <data name="DateAdded" xml:space="preserve">
+    <value>あとで</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="DeleteBanner" xml:space="preserve">
+    <value>表紙を削除する</value>
+  </data>
+  <data name="DeleteBrand" xml:space="preserve">
+    <value>商標権を削除する</value>
+  </data>
+  <data name="DeleteButton" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="DeleteConfirmation" xml:space="preserve">
+    <value>これを削除してもよろしいですか?</value>
+  </data>
+  <data name="DeleteUserConfirm" xml:space="preserve">
+    <value>このユーザーを削除してもよろしいですか?再度取得することはできません</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>形容</value>
+  </data>
+  <data name="DesignedBy" xml:space="preserve">
+    <value>デザイン</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>細部</value>
+  </data>
+  <data name="DetailsButton" xml:space="preserve">
+    <value>細部</value>
+  </data>
+  <data name="Discount%" xml:space="preserve">
+    <value>削減額</value>
+  </data>
+  <data name="DiscountLabel" xml:space="preserve">
+    <value>割引対象</value>
+  </data>
+  <data name="DiscountPercentageHeader" xml:space="preserve">
+    <value>削減率</value>
+  </data>
+  <data name="Discounts" xml:space="preserve">
+    <value>控除</value>
+  </data>
+  <data name="DiscountsTitle" xml:space="preserve">
+    <value>提供</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>転調</value>
+  </data>
+  <data name="EditBanner" xml:space="preserve">
+    <value>カバー調整</value>
+  </data>
+  <data name="EditButton" xml:space="preserve">
+    <value>転調</value>
+  </data>
+  <data name="EditHeader" xml:space="preserve">
+    <value>転調</value>
+  </data>
+  <data name="EditRole" xml:space="preserve">
+    <value>役割の変更</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>電子メール</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>アドレス</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>有効 期限</value>
+  </data>
+  <data name="EndLockoutDate" xml:space="preserve">
+    <value>禁止終了日</value>
+  </data>
+  <data name="EnterPromoCode" xml:space="preserve">
+    <value>コードを入力</value>
+  </data>
+  <data name="ExpiredProductsTitle" xml:space="preserve">
+    <value>完成品</value>
+  </data>
+  <data name="FilterHeader" xml:space="preserve">
+    <value>フィルター</value>
+  </data>
+  <data name="FilterOptionThisMonth" xml:space="preserve">
+    <value>今月</value>
+  </data>
+  <data name="FilterOptionThisYear" xml:space="preserve">
+    <value>今年の</value>
+  </data>
+  <data name="FilterOptionToday" xml:space="preserve">
+    <value>今日</value>
+  </data>
+  <data name="ForgotPasswordLink" xml:space="preserve">
+    <value>パスワードをお忘れですか?</value>
+  </data>
+  <data name="Free Delivery" xml:space="preserve">
+    <value>送料無料</value>
+  </data>
+  <data name="FreeShipping" xml:space="preserve">
+    <value>送料無料</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>フルネーム</value>
+  </data>
+  <data name="GeneralInfoTitle" xml:space="preserve">
+    <value>一般情報</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>行きます</value>
+  </data>
+  <data name="GoHome" xml:space="preserve">
+    <value>ホームページ</value>
+  </data>
+  <data name="GoToCart" xml:space="preserve">
+    <value>お買い物カゴに移動</value>
+  </data>
+  <data name="Hidden" xml:space="preserve">
+    <value>隠れた</value>
+  </data>
+  <data name="HiddenProduct" xml:space="preserve">
+    <value>製品のマスキング</value>
+  </data>
+  <data name="HiddenProducts" xml:space="preserve">
+    <value>隠された製品</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>隠匿</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>ホームページ</value>
+  </data>
+  <data name="HomeReturn" xml:space="preserve">
+    <value>!ホームページ</value>
+  </data>
+  <data name="ImageSizeInfo" xml:space="preserve">
+    <value>最良の結果を得るには、.jpg形式で少なくとも 128 ピクセル× 128 ピクセルの画像を使用します</value>
+  </data>
+  <data name="Increase" xml:space="preserve">
+    <value>増える</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>提供</value>
+  </data>
+  <data name="ItemsLabel" xml:space="preserve">
+    <value>項目</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>禁輸</value>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>禁じられた</value>
+  </data>
+  <data name="LockUser" xml:space="preserve">
+    <value>ユーザーをブロックする</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>ログイン</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>サインアウト</value>
+  </data>
+  <data name="MainImageLabel" xml:space="preserve">
+    <value>メイン画像</value>
+  </data>
+  <data name="MainProductImage" xml:space="preserve">
+    <value>主な製品画像</value>
+  </data>
+  <data name="ManageRole" xml:space="preserve">
+    <value>有効期間の管理</value>
+  </data>
+  <data name="MoEcommerce" xml:space="preserve">
+    <value>Mo電子商取引</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="NeedHelp" xml:space="preserve">
+    <value>お困りですか?</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新機能</value>
+  </data>
+  <data name="NewArrivals" xml:space="preserve">
+    <value>最新製品</value>
+  </data>
+  <data name="NewOrders" xml:space="preserve">
+    <value>新規注文</value>
+  </data>
+  <data name="NewPasswordLabel" xml:space="preserve">
+    <value>新しいパスワード</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>次に</value>
+  </data>
+  <data name="NoCategoryProducts" xml:space="preserve">
+    <value>このセクションにはまだ商品がありません!🙃🙃</value>
+  </data>
+  <data name="NoDiscountsMessage" xml:space="preserve">
+    <value>割引は加えなかったな、スクルージ。</value>
+  </data>
+  <data name="NoItemsInCartMessage" xml:space="preserve">
+    <value>バスケット😒😒😒にアイテムはありません。</value>
+  </data>
+  <data name="NoItemsMessage" xml:space="preserve">
+    <value>カートに商品がありません</value>
+  </data>
+  <data name="NoOrdersMessage" xml:space="preserve">
+    <value>まだリクエストはありません</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>あなたの不思議な検索の結果はありません</value>
+  </data>
+  <data name="NoReviews" xml:space="preserve">
+    <value>この商品にはレビューはありません。</value>
+  </data>
+  <data name="NoWishlistProducts" xml:space="preserve">
+    <value>お気に入りの😒😒😒商品はありません。</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>注文日</value>
+  </data>
+  <data name="OrderListTitle" xml:space="preserve">
+    <value>注文一覧</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>要求</value>
+  </data>
+  <data name="OrdersCount" xml:space="preserve">
+    <value>注文数</value>
+  </data>
+  <data name="OrdersInProgress" xml:space="preserve">
+    <value>配達中の注文</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>注文状況</value>
+  </data>
+  <data name="Out of Stock" xml:space="preserve">
+    <value>使用禁止</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="PasswordChangeTitle" xml:space="preserve">
+    <value>パスワード変更</value>
+  </data>
+  <data name="PasswordTab" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="PercentageLabel" xml:space="preserve">
+    <value>削減率</value>
+  </data>
+  <data name="PercentageSymbol" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>権限</value>
+  </data>
+  <data name="PersonalInfoTitle" xml:space="preserve">
+    <value>個人情報</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>携帯電話</value>
+  </data>
+  <data name="PhoneNumberLabel" xml:space="preserve">
+    <value>電話番号</value>
+  </data>
+  <data name="Pieces" xml:space="preserve">
+    <value>切れ</value>
+  </data>
+  <data name="PrdouctsManagement" xml:space="preserve">
+    <value>製品管理</value>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>高品質</value>
+  </data>
+  <data name="PremiumProduct" xml:space="preserve">
+    <value>高品質の製品</value>
+  </data>
+  <data name="PremiumProducts" xml:space="preserve">
+    <value>高品質の製品</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>先の</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>価格</value>
+  </data>
+  <data name="PriceOrderAsc" xml:space="preserve">
+    <value>価格注文昇順</value>
+  </data>
+  <data name="PriceOrderDesc" xml:space="preserve">
+    <value>価格の降順</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>プライバシー</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>積</value>
+  </data>
+  <data name="Product Details" xml:space="preserve">
+    <value>製品概要</value>
+  </data>
+  <data name="ProductCategories" xml:space="preserve">
+    <value>製品カテゴリ</value>
+  </data>
+  <data name="ProductImage" xml:space="preserve">
+    <value>製品イメージ</value>
+  </data>
+  <data name="ProductImages" xml:space="preserve">
+    <value>製品写真</value>
+  </data>
+  <data name="ProductListTitle" xml:space="preserve">
+    <value>製品一覧</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>製品名</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>プロダクツ</value>
+  </data>
+  <data name="ProductsCount" xml:space="preserve">
+    <value>製品数</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="ProfileSettingsTitle" xml:space="preserve">
+    <value>プロファイル設定</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>量</value>
+  </data>
+  <data name="Rate the Product" xml:space="preserve">
+    <value>製品価値</value>
+  </data>
+  <data name="RecentSalesTitle" xml:space="preserve">
+    <value>最近の販売</value>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>推奨</value>
+  </data>
+  <data name="RegisterUser" xml:space="preserve">
+    <value>ユーザーを追加</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>新しいアカウントを作成</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>未受信</value>
+  </data>
+  <data name="ReleaseFromPremium" xml:space="preserve">
+    <value>トゥームストーンから削除</value>
+  </data>
+  <data name="Remaining" xml:space="preserve">
+    <value>残り</value>
+  </data>
+  <data name="RemainingEndDateHeader" xml:space="preserve">
+    <value>完了時に残っています</value>
+  </data>
+  <data name="RevenueTitle" xml:space="preserve">
+    <value>収入</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>レビュー</value>
+  </data>
+  <data name="ReviewsTitle" xml:space="preserve">
+    <value>レビュー</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>有効</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>ロール名</value>
+  </data>
+  <data name="RolesCount" xml:space="preserve">
+    <value>力</value>
+  </data>
+  <data name="RolesManagement" xml:space="preserve">
+    <value>パワーズ・マネージメント</value>
+  </data>
+  <data name="SalesTitle" xml:space="preserve">
+    <value>セールス</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保全</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>保全</value>
+  </data>
+  <data name="SaveChangesButton" xml:space="preserve">
+    <value>変更の保存</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>捜索</value>
+  </data>
+  <data name="SearchPlaceHolder" xml:space="preserve">
+    <value>何を探しているんですか。🤔</value>
+  </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>業績</value>
+  </data>
+  <data name="Select a Language" xml:space="preserve">
+    <value>サイトの言語を選択する</value>
+  </data>
+  <data name="SelectBrand" xml:space="preserve">
+    <value>商標を選択</value>
+  </data>
+  <data name="SelectProductLabel" xml:space="preserve">
+    <value>製品の識別</value>
+  </data>
+  <data name="SelectRole" xml:space="preserve">
+    <value>ユーザーのロールを選択します。</value>
+  </data>
+  <data name="Seller" xml:space="preserve">
+    <value>売り手</value>
+  </data>
+  <data name="SellerID" xml:space="preserve">
+    <value>ベンダー ID</value>
+  </data>
+  <data name="SellerInfoTitle" xml:space="preserve">
+    <value>ベンダー情報</value>
+  </data>
+  <data name="SellerName" xml:space="preserve">
+    <value>販売者名</value>
+  </data>
+  <data name="SellersCount" xml:space="preserve">
+    <value>販売者数</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Shipping&amp;Returns" xml:space="preserve">
+    <value>配送と返品</value>
+  </data>
+  <data name="Shopping" xml:space="preserve">
+    <value>買い物</value>
+  </data>
+  <data name="ShoppingCartItems" xml:space="preserve">
+    <value>項目</value>
+  </data>
+  <data name="ShoppingCartTitle" xml:space="preserve">
+    <value>ショッピングカート</value>
+  </data>
+  <data name="ShoppingNow" xml:space="preserve">
+    <value>今すぐ購入</value>
+  </data>
+  <data name="Short Description" xml:space="preserve">
+    <value>簡単な説明</value>
+  </data>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>簡単な説明</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>見せる</value>
+  </data>
+  <data name="ShownResults" xml:space="preserve">
+    <value>結果の表示</value>
+  </data>
+  <data name="ShowProduct" xml:space="preserve">
+    <value>製品を表示する</value>
+  </data>
+  <data name="Similar Products" xml:space="preserve">
+    <value>類似製品</value>
+  </data>
+  <data name="Sold by" xml:space="preserve">
+    <value>販売元</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>並び替え</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>地位</value>
+  </data>
+  <data name="Submit Review" xml:space="preserve">
+    <value>レビューを送信</value>
+  </data>
+  <data name="SummaryTitle" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="TellAboutYourself" xml:space="preserve">
+    <value>あなた自身について語る</value>
+  </data>
+  <data name="This is your product" xml:space="preserve">
+    <value>これはあなた自身の製品です</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>住所</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今日</value>
+  </data>
+  <data name="TopOffers" xml:space="preserve">
+    <value>最大の割引</value>
+  </data>
+  <data name="TopSellersbyRevenue" xml:space="preserve">
+    <value>最も収益性の高い売り手</value>
+  </data>
+  <data name="TopSellersRated" xml:space="preserve">
+    <value>トップレートの売り手</value>
+  </data>
+  <data name="TopSellingTitle" xml:space="preserve">
+    <value>ベストセラー</value>
+  </data>
+  <data name="TotalCategories" xml:space="preserve">
+    <value>部門数</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>トータル</value>
+  </data>
+  <data name="TotalRevenue" xml:space="preserve">
+    <value>粗利</value>
+  </data>
+  <data name="TotalReviews" xml:space="preserve">
+    <value>レビュー数</value>
+  </data>
+  <data name="TotalReviewsTitle" xml:space="preserve">
+    <value>あなたが得た合計レビュー</value>
+  </data>
+  <data name="TotalSales" xml:space="preserve">
+    <value>販売台数</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>解禁</value>
+  </data>
+  <data name="UnlockUser" xml:space="preserve">
+    <value>ユーザーのブロックを解除する</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>ユーザーデータを変更する</value>
+  </data>
+  <data name="UpdateUserRole" xml:space="preserve">
+    <value>ユーザーの役割を変更する</value>
+  </data>
+  <data name="UploadImageLabel" xml:space="preserve">
+    <value>画像をアップロード</value>
+  </data>
+  <data name="usefullLinks" xml:space="preserve">
+    <value>関連リンク</value>
+  </data>
+  <data name="UserImage" xml:space="preserve">
+    <value>ユーザーの画像</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>ユーザー管理</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="WebsiteTitle" xml:space="preserve">
+    <value>何かを頼む</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>こんにちは</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>こんにちは、{0}</value>
+  </data>
+  <data name="Wishlist" xml:space="preserve">
+    <value>お気に入り</value>
+  </data>
+  <data name="WishlistProductsCount" xml:space="preserve">
+    <value>お気に入りの製品</value>
+  </data>
+  <data name="WishlistTitle" xml:space="preserve">
+    <value>推奨製品</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+</root>

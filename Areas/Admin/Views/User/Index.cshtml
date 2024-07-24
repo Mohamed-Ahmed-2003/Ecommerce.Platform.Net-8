@@ -1,0 +1,473 @@
+﻿@model UserManagementVM
+
+<style>
+
+    .avatar-upload {
+        position: relative;
+        max-width: 205px;
+        margin: 50px auto;
+    }
+
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 12px;
+            z-index: 1;
+            top: 10px;
+        }
+
+            .avatar-upload .avatar-edit input {
+                display: none;
+            }
+
+                .avatar-upload .avatar-edit input + label {
+                    display: inline-block;
+                    width: 34px;
+                    height: 34px;
+                    margin-bottom: 0;
+                    border-radius: 100%;
+                    background: #FFFFFF;
+                    border: 1px solid transparent;
+                    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+                    cursor: pointer;
+                    font-weight: normal;
+                    transition: all 0.2s ease-in-out;
+                }
+
+                    .avatar-upload .avatar-edit input + label:hover {
+                        background: #f1f1f1;
+                        border-color: #d6d6d6;
+                    }
+
+                    .avatar-upload .avatar-edit input + label:after {
+                        content: "\f4ca";
+                        font-family: bootstrap-icons !important;
+                        color: #757575;
+                        position: absolute;
+                        top: 0px;
+                        left: 0;
+                        right: 0;
+                        text-align: center;
+                        margin: auto;
+                        font-size: 1.5rem;
+                    }
+
+        .avatar-upload .avatar-preview {
+            width: 192px;
+            height: 192px;
+            position: relative;
+            border-radius: 100%;
+            border: 6px solid #d5d5d5;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+            .avatar-upload .avatar-preview > div {
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+
+</style>
+
+    <button type="button" data-bs-toggle="modal" data-bs-target="#RegisterUserModal" class="btn btn-primary w-auto">
+        <span class="bi bi-plus"></span> @Utility.GetTranslation("AddUser")
+    </button>
+<table class="table datatable">
+    <thead>
+        <tr>
+            <th>
+                @Utility.GetTranslation("Preview")
+            </th>
+            <th>
+                @Utility.GetTranslation("Name")
+            </th>
+            <th>
+                @Utility.GetTranslation("Email")
+            </th>
+            <th>
+                @Utility.GetTranslation("Role")
+            </th>
+            <th></th>
+            <th>@Utility.GetTranslation("Locked")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            var userImage = "/images/Users/noImage.png";
+            var userRole = Utility.GetTranslation(user.Role.ToString());
+
+            if (user.UserImage != null)
+            {
+                userImage = $"data:image/png;base64,{Convert.ToBase64String(user.UserImage)}";
+            }
+            <tr>
+                <td>
+                    <img class="rounded-circle" width="40px" height="40px" style="" src="@userImage" alt="Seller Image" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Email)
+                </td>
+                <td>
+                    @userRole
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+
+                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#UpdateUserModal" onclick="fillModal('@user.Id', '@user.Name', '@user.Email', '@userImage', '@userRole')">
+                                    <span class="bi bi-pencil"></span>
+                                    @Utility.GetTranslation("Edit")</button>
+
+                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#UpdateUserRoleModal" onclick="fillRoleModal('@user.Id','@user.Role')">
+                                    <span class="bi bi-gear"></span>
+                                    @Utility.GetTranslation("ManageRole")</button>
+
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-action="Details" asp-route-id="@user.Id">
+                                    <span class="bi bi-info-circle"></span> @Utility.GetTranslation("Details")
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#DeleteUserModal" onclick="fillDeleteUseModel(@user.Id)" class="dropdown-item" data-bs-toggle="modal">
+                                    <span class="bi bi-trash text-danger"></span>
+                                    @Utility.GetTranslation("Delete")
+                                 </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-check form-switch">
+                        @if(user.Role != Utility.Roles.Admin.ToString()){
+                        <input style="width: 4rem;
+                height: 1.5rem;" class="form-check-input" type="checkbox"  role="switch" id="lockSwitch_@user.Id" @(user.LockoutEnd > DateTime.Now ? "checked" : "") data-user-id="@user.Id">
+                        }
+                    </div>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="UpdateUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("UpdateUser")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-action="UpdateUser" asp-controller="User">
+                    <input id="UserId-UpdateModal" type="hidden" asp-for="ProfileToUpdate.UserInfo.Id" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">@Utility.GetTranslation("UserName")</label>
+                                <input type="text" class="form-control" id="recipient-name" asp-for="ProfileToUpdate.UserInfo.Name">
+                                <span asp-validation-for="ProfileToUpdate.UserInfo.Name" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">@Utility.GetTranslation("Email")</label>
+                                <input type="email" class="form-control" id="message-text" asp-for="ProfileToUpdate.UserInfo.Email">
+                                <span asp-validation-for="ProfileToUpdate.UserInfo.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="user-role" class="col-form-label">@Utility.GetTranslation("Role")</label>
+                                <input type="text" class="form-control" id="user-role" asp-for="ProfileToUpdate.UserInfo.Role" readonly>
+                                <span asp-validation-for="ProfileToUpdate.UserInfo.Role" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="user-image" class="col-form-label">@Utility.GetTranslation("UserImage")</label>
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        <input asp-for="ProfileToUpdate.file" type='file' id ="update-imageUpload" />
+                                        <label for="update-imageUpload"></label>
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div id ="update-imagePreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("UpdateUser")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="UpdateUserRoleModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("UpdateUserRole")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="get" asp-action="UpdateUserRole" asp-controller="User" >
+                    <input id="userId-roleModel" type="hidden" name="userId" />
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">@Utility.GetTranslation("Role")</label>
+                        <div class="col-md-10">
+                         <select   id="role-select" name="role" class="form-control" asp-items="@Model.Roles">
+                                <option  value="">@Utility.GetTranslation("SelectRole")</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("UpdateUserRole")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RegisterUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("RegisterUser")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-action="AddUser" asp-controller="User">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="fullName" class="col-form-label">@Utility.GetTranslation("FullName")</label>
+                                <input type="text" class="form-control" id="fullName" asp-for="RegisterVM.FullName">
+                                <span asp-validation-for="RegisterVM.FullName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="col-form-label">@Utility.GetTranslation("Email")</label>
+                                <input type="email" class="form-control" id="email" asp-for="RegisterVM.Email">
+                                <span asp-validation-for="RegisterVM.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="col-form-label">@Utility.GetTranslation("Phone")</label>
+                                <input type="tel" class="form-control" id="phone" asp-for="RegisterVM.Phone">
+                                <span asp-validation-for="RegisterVM.Phone" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="col-form-label">@Utility.GetTranslation("Password")</label>
+                                <input type="password" class="form-control" id="password" asp-for="RegisterVM.Password">
+                                <span asp-validation-for="RegisterVM.Password" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="col-form-label">@Utility.GetTranslation("ConfirmPassword")</label>
+                                <input type="password" class="form-control" id="confirmPassword" asp-for="RegisterVM.ConfirmPassword">
+                                <span asp-validation-for="RegisterVM.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="user-image" class="col-form-label">@Utility.GetTranslation("UserImage")</label>
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        <input asp-for="RegisterVM.UserImageFile" type='file' id="register-imageUpload" />
+                                        <label for="register-imageUpload"></label>
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div id="register-imagePreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="userType" class="col-form-label">@Utility.GetTranslation("SelectRole")</label>
+                                <select class="form-control" id="userType" asp-items="@Model.Roles" asp-for="RegisterVM.Role">
+                                    <option value=""></option>
+                                </select>
+                                <span asp-validation-for="RegisterVM.Role" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("RegisterUser")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal HTML -->
+<div id="DeleteUserModal" class="modal fade" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <h1 class="bi bi-x-circle text-danger"></h1>
+                </div>
+                <h4 class="modal-title w-100 text-center">@Utility.GetTranslation("ConfirmMesg")</h4>
+                <button type="button" class="btn-close position-absolute top-0 start-0 fs-1" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="get" id="DeleteUserForm" asp-action="DeleteUser" asp-controller="User">
+            <div class="modal-body">
+                <input id="userId-deleteForm" type="hidden" name ="userId" />
+                <p>@Utility.GetTranslation("DeleteUserConfirm")</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                <button type="submit" class="btn btn-danger">@Utility.GetTranslation("Delete")</button>
+            </div>
+                </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="lockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="lockForm" method="post" asp-action="ToggleUserLock" asp-controller="User" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("LockUser")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="userId" name="userId">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmLockUser")</p>
+                    </div>
+                    <label class="col-form-label">@Utility.GetTranslation("EndLockoutDate")</label>
+                    <input class="form-control" type="date" id="lockEndDate" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Lock")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="unlockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="unlockForm" method="post" asp-action="ToggleUserLock" asp-controller="User" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("UnlockUser")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="userId" name="userId">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmUnlockUser")</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Unlock")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+     
+
+        function fillRoleModal(userId , userRole) {
+            $('#userId-roleModel').val(userId);
+            const roleSelect = document.getElementById("role-select");
+
+            for (let i = 0; i < roleSelect.options.length; i++) {
+
+                if (roleSelect.options[i].text === userRole) {
+                    roleSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+        }
+        function fillDeleteUseModel(userId) {
+            $('#userId-deleteForm').val(userId);
+        }
+        function fillModal(userId, userName, userEmail, userImage, userRole) {
+            document.getElementById("recipient-name").value = userName;
+            document.getElementById("message-text").value = userEmail;
+            document.getElementById("UserId-UpdateModal").value = userId;
+
+            // Display user image
+
+            $("#update-imagePreview").css(
+                "background-image",
+                "url(" + userImage + ")"
+            );
+            // Set user role
+            document.getElementById("user-role").value = userRole;
+        }
+
+            function readURL(input ,Preview) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        // Use template literals for safer string construction
+                        $(`${ Preview}`).css("background-image", `url(${ e.target.result })`);
+                        $(`${ Preview} `).hide().fadeIn(650);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+        $(document).ready(function () {
+            $("#update-imageUpload").change(function () {
+                readURL(this, "#update-imagePreview");
+            });
+            $("#register-imageUpload").change(function () {
+                readURL(this, "#register-imagePreview");
+            });
+
+            function handleSwitchButtonClick() {
+                var userId = $(this).data('user-id');
+                var isChecked = $(this).is(':checked');
+                isChecked ? $(this).prop('checked', false) : $(this).prop('checked', true);
+                if (isChecked) {
+                    $('#lockModal').modal('show');
+                    $('#lockModal #userId').val(userId);
+                } else {
+                    $('#unlockModal').modal('show');
+                    $('#unlockModal #userId').val(userId);
+
+                }
+            }
+            $('.form-check-input').click(handleSwitchButtonClick);
+
+
+        });
+
+    </script>
+}

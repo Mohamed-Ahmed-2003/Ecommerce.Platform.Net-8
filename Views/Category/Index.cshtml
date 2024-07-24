@@ -1,0 +1,109 @@
+﻿@model CategoryProductsVM
+@using OtlobLap.Configuration
+
+
+<!-- Page Info -->
+<div class="page-info-section page-info-big" style="background:url('@Url.Content("~/Images/Categories/" + Model.Category.BannerUrl)');background-size:cover">
+	<div class="container">
+		<h2 class="text-white d-inline" style="background: rgba(0, 0, 0, 0.3);">@Model.Category.Name</h2>
+	
+		@if (@Model.Category.BannerUrl != null){
+		}
+	</div>
+</div>
+<!-- Page Info end -->
+
+
+
+<!-- Page -->
+<div class="page-area categorie-page spad">
+	<div class="container">
+		<div class="btn-group">
+			<button onclick="ChangeViewMode('@ViewMode.Vertical')" class=" btn btn-default"><i class="fa fa-th"></i></button>
+			<button onclick="ChangeViewMode('@ViewMode.Horizontal')" class="btn btn-default active"><i class="fa fa-list"></i></button>
+		</div>
+		<div class="categorie-filter-warp">
+			<p>@Utility.GetTranslation("ShownResults") @Model.Results.Products?.Count</p>
+
+			<div class="cf-right">
+				<div class="cf-layouts">
+					<a href="#"><img src="img/icons/layout-1.png" alt=""></a>
+					<a class="active" href="#"><img src="img/icons/layout-2.png" alt=""></a>
+				</div>
+				<form id="ProductsLoadSettings">
+					<input class="setPage" type="hidden" asp-for="SettingsDto.Page" />
+					<input class="setViewMode" type="hidden" asp-for="SettingsDto.Mode" />
+					<input value="@Model.Category.ID" type="hidden" asp-for="SettingsDto.CategoryId" />
+
+					<select id="brandSelect" asp-for="SettingsDto.BrandId">
+						<option value="">@Utility.GetTranslation("Brand")</option>
+						@if (Model.Results.Brands != null && Model.Results.Brands.Any())
+						{
+							foreach (var brand in Model.Results.Brands)
+							{
+								<option value="@brand.Id">@brand.Name</option>
+							}
+						}
+					</select>
+
+					<select id="filterSelect" asp-for="SettingsDto.Filter">
+						<option value="">@Utility.GetTranslation("SortBy")</option>
+						@foreach (var filter in Enum.GetValues<ResultsFilter>())
+						{
+							<option value="@((int) filter)">@Utility.GetTranslation(filter.ToString())</option>
+						}
+					</select>
+				</form>
+
+			</div>
+
+			</div>
+		</div>
+
+	@if (Model.Results.Products!= null && Model.Results.Products.Count > 0)
+		{
+			
+			<div id="products-container" class="container">
+				<div class="row ">
+			<partial name="_PoductsLoadGrid" model="@Model.Results.Products" />
+				</div>
+
+			</div>
+
+			<div id="pagination-container">
+			</div>
+		}
+		else
+		{
+			<p class="alert alert-info text-center mt-2">@Utility.GetTranslation("NoCategoryProducts")</p>
+		}
+
+	</div>
+</div>
+
+@section Styles {
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+	<link rel="stylesheet" href="~/css/ProductCard_V.css" />
+	
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/UserActions.js"></script>
+    <script src="~/js/HomeActions.js"></script>
+
+	<script >
+
+		$(document).ready(function () {
+			loadPaginationControls();
+			paginationEvent();
+		});
+
+		$('#ProductsLoadSettings select').change(function () {
+			$('.setPage').val($('.current-page').data('page'));
+			
+			loadProducts();
+		});
+
+
+	</script>
+}

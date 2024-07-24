@@ -1,0 +1,60 @@
+﻿@model List<Order>
+<h2>@Utility.GetTranslation("OrderListTitle")</h2>
+
+<link rel="stylesheet" href="~/css/Cart.css" />
+
+@if (Model != null && Model.Count > 0)
+{
+    @foreach (var order in Model)
+    {
+        <div class="order-box m-3 p-3" style="border-radius:2rem;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <p><strong>@Utility.GetTranslation("OrderDate"):</strong> @order.Date.ToString("dd/MM/yyyy")</p>
+                @if (order.ArrivalDate != default){
+            <p><strong>@Utility.GetTranslation("ArrivalDate"):</strong>
+                    @order.ArrivalDate.ToString("dd/MM/yyyy")
+                
+            </p>
+                }
+            <p><strong>@Utility.GetTranslation("SellerName"):</strong> @order.OrderItems[0].Product.Seller.Name</p>
+
+            <div class="product-list">
+                <h4>@Utility.GetTranslation("ProductListTitle")</h4>
+
+                @foreach (var orderItem in order.OrderItems)
+                {
+                    var productImageName = orderItem.Product?.MainProductImage ?? orderItem.Product?.ProductImages?.FirstOrDefault()?.URL ?? "no-image.jpg";
+
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center">
+
+                            <div class="col-2">
+                                <a asp-action="ProductDetails" asp-controller="Home" asp-route-Id="@orderItem.ProductId">
+                                    <img width="70x" height="70px" src="~/Images/Products/@productImageName" alt="@Utility.GetTranslation("ProductImage")" />
+                                </a>
+                            </div>
+
+                            <div class="col">
+                                <div class="row text-muted">@orderItem.Product.Brand</div>
+                                <div class="row text-black">@orderItem.Product.Name</div>
+                            </div>
+
+                            <div class="col">
+                                <div class="row text-black" style=>@orderItem.Quantity @Utility.GetTranslation("Quantity")</div>
+                            </div>
+
+                            <div class="col">
+                                @Html.Raw(Utility.OrderStatusSpan(order.Status))
+                            </div>
+
+                            <div class="col text-start text-black ">@orderItem.Price.ToString("c") <a asp-action="RemoveFromWishlist" asp-controller="Wishlist" asp-route-productId="@orderItem.ProductId" style="cursor:pointer" class="close fs-6 fw-bolder">&#10005;</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="alert alert-info">@Utility.GetTranslation("NoOrdersMessage") 😒😒😒.</p>
+}

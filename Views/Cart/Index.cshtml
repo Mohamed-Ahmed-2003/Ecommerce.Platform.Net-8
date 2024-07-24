@@ -1,0 +1,130 @@
+﻿@model OtlobLap.Models.Cart
+@{
+    decimal total = 0.0M;
+    decimal discountedTotal = 0.0M;
+}
+
+<link rel="stylesheet" href="~/css/Cart.css" />
+
+<div class="cart-card" dir="ltr">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col"><h4><b>@Utility.GetTranslation("ShoppingCartTitle")</b></h4></div>
+                    @if (Model.OrderItems != null && Model.OrderItems.Count() > 0)
+                    {
+                        <div class="col align-self-center text-end text-muted">@Model.OrderItems.Count() @Utility.GetTranslation("ItemsLabel")</div>
+                    }
+                </div>
+            </div>
+
+            @if (Model != null && Model.OrderItems != null && Model.OrderItems.Count > 0)
+            {
+                @foreach (var item in Model.OrderItems)
+                {
+                    total += item.Price;
+                    <div class="row border-top border-bottom order-item-box" id="order-item-@item.ID">
+                        <div class="row main align-items-center">
+                            <div class="col-2"><a asp-action="ProductDetails" asp-controller="Home" asp-route-Id="@item.ProductId"><img class="img-fluid" style="border-radius:1rem" src="~/Images/Products/@item.Product.MainProductImage"></a></div>
+                            <div class="col">
+                                <div class="row text-muted">@item.Product.Brand</div>
+                                <div class="row">@item.Product.Name</div>
+                            </div>
+                            <div class="col d-flex justify-content-center">
+                                <button style="color:white;background:black" onclick="UpdateCart('@item.ID',-1)">-</button>
+                                <span class="border qty p-1 ">@item.Quantity</span>
+                                <button style="color:white;background:black" onclick="UpdateCart('@item.ID',1)">+</button>
+                            </div>
+                            <div class="col text-end order-item-price d-flex justify-content-between align-items-center ">
+                                @item.Product.Price.ToString("C")
+                                <i onclick="RemoveFromCart(@item.ID)" style="cursor:pointer; font-size:1.5rem" class="fa-regular fa-circle-xmark m-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="back-to-shop"><a asp-controller="Home" asp-action="Index">&leftarrow;</a><span class="text-muted">@Utility.GetTranslation("BackToShopping")</span></div>
+            }
+            else
+            {
+                <p class="alert alert-info text-center">@Utility.GetTranslation("NoItemsMessage") 😒😒😒.</p>
+            }
+        </div>
+
+        @if (Model != null && Model.OrderItems != null && Model.OrderItems.Count > 0)
+        {
+            <div class="col-md-4 summary">
+                <div dir="rtl"><h5><b>@Utility.GetTranslation("SummaryTitle")</b></h5></div>
+                <hr>
+                <div dir="auto" class="row">
+                    <div class="col d-flex justify-content-between " style="padding-left:0;">
+                        <p>@Utility.GetTranslation("ItemsLabel") : @Model.OrderItems.Count</p>
+                        <strong dir="ltr" class="total">@total.ToString("C")</strong>
+                    </div>
+                </div>
+                @{
+                    foreach (var item in Model.OrderItems)
+                    {
+                        if (item.Product?.Discount != null)
+                        {
+                            discountedTotal += item.Price * (item.Product.Discount.Percentage / 100m);
+
+                            <div id="discount-@item.ID" dir="auto" class="row ">
+                                <div class="col d-flex justify-content-between" style="padding-left:0;">
+                                    <p>@Utility.GetTranslation("DiscountOnProduct") @item.Product?.Name</p>
+                                    <strong class=" text-right" style="color:#b09d81">@item.Product?.Discount.Percentage%</strong>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                <form>
+                    <p>@Utility.GetTranslation("FreeShipping")</p>
+                    <p>@Utility.GetTranslation("EnterPromoCode")</p>
+                    <input class="cart-input" id="code" placeholder="@Utility.GetTranslation("EnterCodePlaceholder")">
+                </form>
+                <div class="row total-price-box" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    @if (discountedTotal > 0)
+                    {
+                        <div class="text-center"><h5><b>@Utility.GetTranslation("AfterDiscountLabel")</b></h5></div>
+                        <hr>
+                        <span dir="ltr" class="text-decoration-line-through total ">@total.ToString("C")</span>
+                        <div class="col d-flex justify-content-between">
+                            <strong class="discounted-total">@((total - discountedTotal).ToString("C"))</strong>
+                            @Utility.GetTranslation("TotalLabel")
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col d-flex justify-content-between">
+                            <strong class="total">@total.ToString("C")</strong>
+                            @Utility.GetTranslation("TotalLabel")
+                        </div>
+                    }
+                </div>
+              @*   <a asp-action="ExecuteOrders" asp-controller="Order" class="cart-btn">@Utility.GetTranslation("CheckoutButton")</a> *@
+                <a class="cart-btn " asp-area="" asp-controller="Checkout" asp-action="Checkout">@Utility.GetTranslation("CheckoutButton")</a>
+                
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Styles {
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/UserActions.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/UserActions.js"></script>
+
+}

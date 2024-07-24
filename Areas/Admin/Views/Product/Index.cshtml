@@ -1,0 +1,238 @@
+﻿@model IEnumerable<OtlobLap.Models.Product>
+
+<table class="table datatable">
+  
+    <thead>
+        <tr>
+      
+            <th>
+                @Utility.GetTranslation("Preview")
+            </th> 
+            
+            <th>
+                @Utility.GetTranslation(Html.DisplayNameFor(model => model.Name))
+            </th>
+            <th>
+                   @Utility.GetTranslation(Html.DisplayNameFor(model => model.Brand))
+            </th>
+            <th>
+                   @Utility.GetTranslation(Html.DisplayNameFor(model => model.AvailableInStock))
+            </th>
+            <th>
+                @Utility.GetTranslation("AddedDate")
+            </th>
+
+            <th>@Utility.GetTranslation("Hidden")</th>
+            <th>
+                <span style="color:gold" class="bi bi-award fw-bolder "></span>
+                @Utility.GetTranslation("Premium")
+                
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{
+                    var productImage = item.MainProductImage ?? "no-image.jpg";
+                }
+                <td><img src="~/Images/Products/@productImage" alt="@Utility.GetTranslation("ProductImage")" width="50" height="50" /></td>
+
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableInStock)
+                </td>
+                
+                <td>
+                    @if (item.AddedDate != default)
+                    {
+                        @Html.DisplayFor(modelItem => item.AddedDate)
+                    }
+                </td>
+
+                <td>
+                    <div class="form-check form-switch" >
+                
+           <input style="width: 4rem;
+           height: 1.5rem;"  class="form-check-input hidden-switch" type="checkbox" role="switch" @(item.IsHidden ? "checked" : "") data-product-id="@item.ID">
+                        
+                    </div>
+                </td>    
+                
+                
+                <td>
+                    <div class="form-check form-switch" >
+                
+           <input style="width: 4rem;
+           height: 1.5rem;"  class="form-check-input premium-switch" type="checkbox" role="switch" @(item.Premium ? "checked" : "") data-product-id="@item.ID">
+                        
+                    </div>
+                </td>
+         
+
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" asp-action="Details" asp-route-id="@item.ID">
+                                    <span class="bi bi-info-circle"></span> @Utility.GetTranslation("Details")
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-action="Delete" asp-route-id="@item.ID">
+                                    <span class="bi bi-trash"></span> @Utility.GetTranslation("Delete")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="HideModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="HiddenForm" method="post" asp-action="ToggleHide" asp-controller="Product" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("HiddenProduct")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="productId" name="Id">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmHideProduct")</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Hide")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="HiddenForm" method="post" asp-action="ToggleHide" asp-controller="Product" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("ShowProduct")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="productId" name="Id">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmShowProduct")</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Show")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MakePremiumModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="MakePremiumForm" method="post" asp-action="TogglePremium" asp-controller="Product" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("PremiumProduct")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="premiumPropertyId" name="Id">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmPremiumProduct")</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Yes")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ReleasePremiumModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="ReleasePremiumForm" method="post" asp-action="TogglePremium" asp-controller="Product" asp-area="Admin">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("ReleaseFromPremium")</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="releasedPropertyId" name="Id">
+                    <div>
+                        <p>@Utility.GetTranslation("ConfirmReleaseFromPremium")</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Yes")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+    function handleSwitchButtonClick() {
+                var productId = $(this).data('product-id');
+                var isChecked = $(this).is(':checked');
+            $(this).prop('checked', !isChecked)
+            if (!isChecked) {
+                $('#ShowModal').modal('show');
+                $('#ShowModal #productId').val(productId);
+                } else {
+                $('#HideModal').modal('show');
+                $('#HideModal #productId').val(productId);
+
+                }
+            }
+
+        function handlePremiumButtonClick() {
+            var premiumPropertyId = $(this).data('product-id');
+            var isChecked = $(this).is(':checked');
+            $(this).prop('checked', !isChecked)
+
+            if (isChecked) {
+                $('#MakePremiumModal').modal('show');
+
+                $('#MakePremiumModal #premiumPropertyId').val(premiumPropertyId);
+
+            } else  {
+                $('#ReleasePremiumModal').modal('show');
+                $('#ReleasePremiumModal #releasedPropertyId').val(premiumPropertyId);
+            }
+        }
+
+        $('.hidden-switch').click(handleSwitchButtonClick);
+        $('.premium-switch').click(handlePremiumButtonClick);
+
+
+            </script>
+}

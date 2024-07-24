@@ -1,0 +1,25 @@
+﻿@model OtlobLap.ViewModels.PaginationVM
+
+
+<nav dir="ltr" aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item   @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link @(Model.CurrentPage > 1 ? "tomato-color" : "") " href="#" data-page="@(Model.CurrentPage - 1)" tabindex="-1" aria-disabled="true">@Utility.GetTranslation("Previous")</a>
+        </li>
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item  ">
+                @{
+
+                    <a class="page-link   @(i == Model.CurrentPage ? "bg-tomato current-page" : " tomato-color")" href="#" data-page="@i">@i</a>
+                    
+                }
+            </li>
+        }
+
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link @(Model.CurrentPage < Model.TotalPages ?  "tomato-color" :"")" href="#" data-page="@(Model.CurrentPage + 1)">@Utility.GetTranslation("Next")</a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,320 @@
+﻿@model IEnumerable<OtlobLap.Models.Discount>
+
+@{
+    ViewData["Title"] = Utility.GetTranslation("DiscountsTitle");
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary w-auto" data-bs-toggle="modal" data-bs-target="#addDiscountModal">
+    <i class="bi bi-plus"></i> @Utility.GetTranslation("AddDiscountButton")
+</button>
+
+<!-- Modal add -->
+<div dir="rtl" class="modal fade" id="addDiscountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("AddDiscountTitle")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="discountForm">
+                    <label class="form-label">@Utility.GetTranslation("SelectProductLabel")</label>
+                    <select name="ProductId" class="form-control" asp-items="@ViewBag.productsList">
+                        <option></option>
+                    </select>
+                    <label class="form-label">@Utility.GetTranslation("PercentageLabel")</label>
+                    <input name="Percentage" type="number" min="1" max="100" class="form-control" />
+                    <label class="form-label">@Utility.GetTranslation("EndDateLabel")</label>
+                    <input name="EndDate" class="form-control" type="datetime-local" />
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("CancelButton")</button>
+                <button type="button" class="btn btn-primary submit-add-form">@Utility.GetTranslation("ConfirmButton")</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editDiscountModal" tabindex="-1" aria-labelledby="editDiscountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDiscountModalLabel">تعديل التخفيض</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for editing discount -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary submit-edit-form">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Remove Modal -->
+<div class="modal fade" id="removeDiscountModal" tabindex="-1" aria-labelledby="removeDiscountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeDiscountModalLabel">تأكيد الحذف</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>هل أنت متأكد أنك تريد حذف هذا التخفيض؟</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-danger submit-remove-form">حذف</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table datatable">
+        <thead>
+            <tr>
+                <th>@Utility.GetTranslation("ActiveHeader")</th>
+                <th>@Utility.GetTranslation("ProductName")</th>
+                <th>@Utility.GetTranslation("DiscountPercentageHeader")</th>
+                <th>@Utility.GetTranslation("RemainingEndDateHeader")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var discount in Model)
+            {
+
+                <tr id="@discount.Id">
+                    <td>
+                        <div class="form-check form-switch w-100 d-flex justify-content-center">
+                            <input onclick="DiscountActivate(@discount.Id)" id="discount-active-input" @(discount.IsActive ? "checked" : "") class="form-check-input" style="cursor:pointer;height: 1.5rem;
+                            width: 4rem;" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                    </td>
+
+                    <td class="product-name">@discount.Product?.Name</td>
+                    <td class="percentage">@discount.Percentage%</td>
+                    <td data-date="@discount.EndDate.ToString("yyyy-MM-ddTHH:mm")" class="end-date">@Utility.CalculateRemainingTime(discount.EndDate)</td>
+                    <td class="text-end">
+                        <div class="btn-group">
+                            <button type="button" style="background-color:#4154f1" class="btn text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @Utility.GetTranslation("Actions")
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button class="dropdown-item edit-btn btn btn-warning" data-bs-toggle="modal" data-bs-target="#editDiscountModal">
+                                        @Utility.GetTranslation("EditButton") <i class="bi bi-pencil"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item remove-btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeDiscountModal">
+                                        @Utility.GetTranslation("DeleteButton") <i class="bi bi-x"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="alert alert-dark">@Utility.GetTranslation("NoDiscountsMessage")</p>
+}
+
+
+
+@section Styles {
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+
+        $(document).ready(function () {
+            if (localStorage.getItem('addedDiscount')){
+            successNoti("هتولع", "تمت اضافة التخفيض للمنتج");
+                localStorage.removeItem('addedDiscount');
+            }
+
+           
+           // ---------------
+            const addDiscount = function () {
+                    var formData = $('#discountForm').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("AddDiscount", "Discount")',
+                        data: formData,
+                        success: function (res) {
+
+                            localStorage.setItem('addedDiscount', 'true');
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                        errorNoti("اسلك", "لم يتم اضافة التخفيض");
+
+                        }
+                    });
+                $('#addDiscountModal').modal('hide');
+
+            };
+            $('.submit-add-form').click(addDiscount);
+           // ---------------
+            $('.edit-btn').click(function () {
+                const tr = $(this).closest('tr');
+                const productName = tr.find('.product-name').text().trim();
+                const percentage = tr.find('.percentage').text().trim();
+                const endDate = tr.find('.end-date').data('date');
+                clickedDiscountId = tr.attr('id');
+
+                const modal = $('#editDiscountModal .modal-body');
+                modal.empty(); // Clear previous content
+
+                const form = $('<form>', { id: 'editDiscountForm' });
+
+                const productInput = $('<input>', {
+                    class: 'form-control product-input',
+                    value: productName,
+                    disabled: true
+                });
+                const percentageInput = $('<input>', {
+                    class: 'form-control percentage-input',
+                    name: 'Percentage',
+                    type: 'number',
+                    min: 1,
+                    max: 100,
+                    value: percentage.replace('%', '') // Remove '%' from the percentage value
+                });
+
+                const endDateInput = $('<input>', {
+                    class: 'form-control end-date-input',
+                    name: 'EndDate',
+                    type: 'datetime-local',
+                    value: endDate
+                });
+
+
+
+                form.append(
+                    $('<label>', { class: 'form-label', text: 'المنتج' }),
+                    productInput,
+                    $('<label>', { class: 'form-label', text: 'نسبة التخفيض' }),
+                    percentageInput,
+
+                    $('<label>', { class: 'form-label', text: 'تاريخ الانتهاء' }),
+                    endDateInput,
+                    $('<input>', { name: 'id', value: clickedDiscountId, type: 'hidden' }),
+
+                );
+
+                modal.append(form);
+            });
+            const editDiscount = function () {
+                var formData = $('#editDiscountForm').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("EditDiscount", "Discount")',
+                        data: formData,
+                        success: function (res) {
+                            updateHTML(res);
+                            successNoti("نجحت العملية", "تم تعديل التخفيض ");
+                        },
+                        error: function (xhr, status, error) {
+                        errorNoti("فشلت العملية", "لم يتم تعديل التخفيض");
+
+                        }
+                    });
+                $('#editDiscountModal').modal('hide');
+
+            };
+            $('.submit-edit-form').click(editDiscount);
+           // ---------------
+
+            $('.remove-btn').click(function () {
+                const modal = $('#removeDiscountModal');
+
+                const form = $('<form>', { id: 'removeDiscountForm' });
+
+                // Create the hidden input element for the ID
+                const idInput = $('<input>', {
+                    name: 'Id',  // Use colon (:) for key-value pairs, not equals (=)
+                    type: 'hidden',
+                    value: $(this).closest('tr').attr('id') // Use closest() to find the closest ancestor tr element
+                });
+                // Empty the form and append the ID input
+                form.append(idInput);
+                modal.append(form);
+            });
+
+            const removeDiscount = function () {
+
+                var formData = $('#removeDiscountForm').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RemoveDiscount", "Discount")',
+                    data: formData,
+                    success: function (id) {
+                        updateDiscountRemoveHTML(id);
+                        successNoti("نجحت العملية", "تم حذف التخفيض ");
+                    },
+                    error: function (xhr, status, error) {
+                        errorNoti("فشلت العملية", "لم يتم حذف التخفيض");
+
+                    }
+                });
+                $('#removeDiscountModal').modal('hide');
+            };
+            $('.submit-remove-form').click(removeDiscount);
+
+            function updateHTML(res) {
+                const tr = $(`#${res.id}`);
+                tr.find('.percentage').text(res.percentage + '%');
+                tr.find('.end-date').text(calculateRemainingTime(res.endDate));
+                          }
+            function updateDiscountRemoveHTML (id) {
+                const tr = $(`#${id}`);
+                tr.remove();
+                          }
+
+            
+
+        });
+        function DiscountActivate(id) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ToggleDiscountStatus","discount")',
+                data: { id: id },
+                success: () => {
+                    successNoti('','تم تحديث حالة الكوبون')
+                },
+                error(err) {
+                    console.error(err);
+                }
+
+            })
+        }
+    </script>
+}
+

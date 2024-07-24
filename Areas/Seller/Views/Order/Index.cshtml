@@ -1,0 +1,140 @@
+﻿@model List<Order>
+
+@{
+    // Arabic dictionary for localization
+    var arabicTranslations = new Dictionary<string, string>()
+    {
+        { "ProductImageHeader", "صورة المنتج" },
+        { "QuantityHeader", "الكمية" },
+        { "PriceHeader", "السعر" },
+        { "ProductNameHeader", "اسم المنتج" },
+        { "CustomerNameHeader", "اسم العميل" },
+        { "OrderDateHeader", "تاريخ الطلب" },
+        { "ActionHeader", "اجراء" },
+        { "OrderStatusModalTitle", "حالة الطلب" },
+        { "CancelButton", "الغاء" },
+        { "ConfirmButton", "تأكيد" }
+    };
+}
+
+<div class="order-box">
+    <div class="product-list">
+        <table id="ordersTable" class="table">
+            <thead>
+                <tr>
+                    <th>@Utility.GetTranslation("ProductImage")</th>
+                    <th>@Utility.GetTranslation("Quantity")</th>
+                    <th>@Utility.GetTranslation("Price")</th>
+                    <th>@Utility.GetTranslation("ProductName")</th>
+                    <th>@Utility.GetTranslation("CustomerName")</th>
+                    <th>@Utility.GetTranslation("OrderDate")</th>
+                    <th>@Utility.GetTranslation("Actions")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    @foreach (var orderItem in order.OrderItems)
+                    {
+                        <tr>
+                            @{
+                                var productImage = orderItem.Product?.MainProductImage ?? "no-image.jpg";
+                            }
+                            <td><img src="~/Images/Products/@productImage" alt="@Utility.GetTranslation("ProductImage")" width="50" height="50" /></td>
+                            <td>@orderItem.Quantity</td>
+                            <td>@orderItem.Price</td>
+                            <td>@orderItem.Product?.Name</td>
+                            <td>@order.Customer?.Name</td>
+                            <td>@order.Date.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="#" class="btn btn-primary" onclick="showOrderModal('@order.ID')">@Utility.GetTranslation("Actions")</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr />
+
+<!-- Modal -->
+<div  class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("OrderStatusModalTitle")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("CancelButton")</button>
+                <button type="button" class="btn btn-primary">@Utility.GetTranslation("ConfirmButton")</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+
+}
+
+@section scripts {
+    
+
+    <!-- DataTables scripts -->
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+ 
+<script>
+    function showOrderModal(orderId) {
+
+       
+        // Generate the HTML for the modal content
+        var modalContent = `
+                       <form id="orderForm" action='@Url.Action("ExecuteOrder", "Order")' method="post">
+                                    <input type="hidden" name="ID" value="${orderId}" />
+                            <div>
+                                   <select name="Status" id="orderStatusDropdown" class="form-control">
+                
+                            </select>
+                            </div>
+                        </form>
+                    `;
+
+        // Set the modal body content
+        $('#orderModal .modal-body').html(modalContent);
+        $.ajax({
+                url: '@Url.Action("GetOrderStatusOptions","Order")',
+                method:'GET',
+                success: res =>{
+                    res.forEach(opt => {
+
+                    
+
+                        $('#orderStatusDropdown')
+                            .append(`<option value="${opt.value}">${opt.text}</option>`);
+
+                        })
+                },
+            error: (xhr, status, error)=>{
+                    console.error('Error fetching enum options:', error);
+
+            }
+
+        })
+        $('#orderModal .modal-footer .btn-primary ').click( () => {
+                $("#orderForm").submit()
+        })
+        // Show the modal
+        $('#orderModal').modal('show');
+    }
+ 
+</script>
+
+}

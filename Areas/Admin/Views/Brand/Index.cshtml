@@ -1,0 +1,181 @@
+﻿ @model ManageBrandsVM
+
+<button type="button" data-bs-toggle="modal" data-bs-target="#AddBrandModal" class="btn btn-primary w-auto">
+    <span class="bi bi-plus"></span> @Utility.GetTranslation("AddBrand") +
+</button>
+
+<table class="table table-striped datatable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>@Utility.GetTranslation("BrandImage")</th>
+            <th>@Utility.GetTranslation("Name")</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var brand in Model.Brands)
+        {
+            <tr>
+                <td>@brand.Id</td>
+                @{
+                    var brandImage = string.IsNullOrEmpty(brand.BrandImage) ? Utility.NoImageUrl : brand.BrandImage;
+                }
+                <td>
+                    <img src="~/Images/Brands/@brandImage" alt="Cover Image" class="img-fluid" style="height: 50px;
+    width: 50px;
+}" />
+                </td>
+                @* <td >@Html.Raw(banner.Description)</td> *@
+                <td>
+                    <strong>@brand.Name </strong>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+
+                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#EditBrandModal" onclick="fillEditBrandModal(`@brand.Id`, `/Images/Brands/@brandImage`, `@brand.Name`) ">
+                                    <span class="bi bi-pencil"></span>
+                                    @Utility.GetTranslation("Edit")
+                                </button>
+
+                            </li>
+
+                            <li>
+                                <a href="#DeleteBrandModal" onclick="fillDeleteBrandModal('@brand.Id')" class="dropdown-item" data-bs-toggle="modal">
+                                    <span class="bi bi-trash text-danger"></span>
+                                    @Utility.GetTranslation("Delete")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="AddBrandModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("AddBrand")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addBrandForm" method="post" enctype="multipart/form-data" asp-action="Create" asp-controller="Brand">
+
+                    <div class="form-group">
+                        <label asp-for="BrandVM.Name" class="control-label">@Utility.GetTranslation("Name")</label>
+                        <input class="form-control" asp-for="BrandVM.Name"></input>
+                        <span asp-validation-for="BrandVM.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="bannerImage" class="form-label">@Utility.GetTranslation("BrandImage")</label>
+                        <input type="file" class="form-control" id="bannerImage" asp-for="BrandVM.ImageFile" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div class="mb-3">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="width: 100%; height: 20rem;object-fit:cover; display: none;">
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("AddBrand")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditBrandModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("EditBrand")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editBrandModal" method="post" enctype="multipart/form-data" asp-action="Edit" asp-controller="Brand">
+                    <input type="hidden" id="BrandId" asp-for="BrandVM.Id" />
+                    <div class="form-group">
+                        <label asp-for="BrandVM.Name" class="control-label">@Utility.GetTranslation("Name")</label>
+                        <input id="BrandName" class="form-control" asp-for="BrandVM.Name"></input>
+                        <span asp-validation-for="BrandVM.Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBannerImage" class="form-label">@Utility.GetTranslation("BrandImage")</label>
+                        <input type="file" class="form-control" id="editBannerImage" asp-for="BrandVM.ImageFile" accept="image/*" onchange="previewEditImage(event)" />
+                    </div>
+                    <div class="mb-3">
+                        <img id="editImagePreview" src="#" alt="Image Preview" style="width: 100%; height: 20rem;object-fit:cover; display: none;">
+                    </div>
+
+                    <!-- Add more fields here as needed -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Close")</button>
+                        <button type="submit" class="btn btn-primary">@Utility.GetTranslation("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteBrandModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Utility.GetTranslation("DeleteBrand")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Delete" asp-controller="Brand">
+                <div class="modal-body">
+
+                    <p>@Utility.GetTranslation("ConfirmDeleteBrand")</p>
+                    <input name="Id" type="hidden" id="brandIdToDelete" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Utility.GetTranslation("Cancel")</button>
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">@Utility.GetTranslation("Delete")</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function fillEditBrandModal(BrandId, ImageUrl, Name) {
+            $('#EditBrandModal #BrandId').val(BrandId);
+
+            $('#EditBrandModal #BrandName').val(Name);
+            if (ImageUrl != null && ImageUrl != "")
+                $('#EditBrandModal #editImagePreview').attr('src', ImageUrl).show();
+
+          
+            // Show the modal
+            $('#EditBrandModal').modal('show');
+        }
+        function fillDeleteBrandModal(brandId) {
+            $('#brandIdToDelete').val(brandId);
+        }
+        function previewImage(event) {
+            var input = event.target;
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'block';
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                imagePreview.src = dataURL;
+            };
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    </script>
+
+}

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<OtlobLap.Models.Product>
+
+    @foreach (var product in Model)
+    {
+        await Html.RenderPartialAsync("_ProductCardH", product);
+    }
+    

@@ -1,0 +1,84 @@
+﻿
+<link href="~/css/flags.css" rel="stylesheet" />
+
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-globe h4 tomato-color"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        @{
+            var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+        }
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="en-US" asp-route-returnUrl="@returnUrl">
+                English
+                <div class="flag flag-us"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="ar-EG" asp-route-returnUrl="@returnUrl">
+                العربية
+                <div class="flag flag-eg"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="es-ES" asp-route-returnUrl="@returnUrl">
+                Español
+                <div class="flag flag-es"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="fr-FR" asp-route-returnUrl="@returnUrl">
+                Français
+                <div class="flag flag-fr"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="zh-CN" asp-route-returnUrl="@returnUrl">
+                中文
+                <div class="flag flag-cn"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="pt-BR" asp-route-returnUrl="@returnUrl">
+                Português
+                <div class="flag flag-br"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="de-DE" asp-route-returnUrl="@returnUrl">
+                Deutsch
+                <div class="flag flag-de"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="ja-JP" asp-route-returnUrl="@returnUrl">
+                日本語
+                <div class="flag flag-jp"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="ru-RU" asp-route-returnUrl="@returnUrl">
+                Русский
+                <div class="flag flag-ru"></div>
+            </a>
+        </li>
+
+        <li class="d-flex justify-content-between">
+            <a class="dropdown-item" asp-controller="Home" asp-action="SetLanguage" asp-route-culture="hi-IN" asp-route-returnUrl="@returnUrl">
+                हिन्दी
+                <div class="flag flag-in"></div>
+            </a>
+        </li>
+    </ul>
+</div>

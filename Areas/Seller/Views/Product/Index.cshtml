@@ -1,0 +1,74 @@
+﻿@model IEnumerable<OtlobLap.Models.Product>
+
+<table class="table datatable">
+    <a asp-action="Create" class="btn btn-primary w-auto">
+        <span class="bi bi-plus"></span> @Utility.GetTranslation("AddProduct")
+    </a>
+    <thead>
+        <tr>
+            <th>
+                @Utility.GetTranslation("Preview")
+            </th> 
+            
+            <th>
+                @Utility.GetTranslation(Html.DisplayNameFor(model => model.Name))
+            </th>
+            <th>
+                   @Utility.GetTranslation(Html.DisplayNameFor(model => model.Brand))
+            </th>
+            <th>
+                   @Utility.GetTranslation(Html.DisplayNameFor(model => model.AvailableInStock))
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{
+                    var productImage = item.MainProductImage ?? "no-image.jpg";
+                }
+                <td><img src="~/Images/Products/@productImage" alt="@Utility.GetTranslation("ProductImage")" width="50" height="50" /></td>
+
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <span class="badge badge-primary text-dark">@item.Brand?.Name</span>
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableInStock)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background-color:#4154f1" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @Utility.GetTranslation("Actions")
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" asp-action="Edit" asp-route-id="@item.ID">
+                                    <span class="bi bi-pencil"></span> @Utility.GetTranslation("Edit")
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-action="Details" asp-route-id="@item.ID">
+                                    <span class="bi bi-info-circle"></span> @Utility.GetTranslation("Details")
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-action="Delete" asp-route-id="@item.ID">
+                                    <span class="bi bi-trash"></span> @Utility.GetTranslation("Delete")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+

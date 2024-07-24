@@ -1,0 +1,303 @@
+﻿@model OtlobLap.ViewModels.SellerDashboardVM
+@{
+    ViewData["Title"] = Utility.GetTranslation("SellerInfoTitle");
+}
+
+<!-- Left side columns -->
+<div class="col-lg-8">
+    <div class="row">
+        <!-- بطاقة المبيعات -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                            <h6>@Utility.GetTranslation("FilterHeader")</h6>
+                        </li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.Today">@Utility.GetTranslation("FilterOptionToday")</button></li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.ThisMonth">@Utility.GetTranslation("FilterOptionThisMonth")</button></li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.ThisYear">@Utility.GetTranslation("FilterOptionThisYear")</button></li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("SalesTitle") <span class="curr-filter"> | @Utility.GetTranslation("Today")</span></h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-cart"></i>
+                        </div>
+                        <div class="ps-3">
+                            <strong class="sales-count">@Model.Sales</strong>
+                            <br />
+                            <span class="prev-sales-percent text-success small pt-1 fw-bold">@Model.IncreasedSalesPercent %</span> <span class="text-muted small pt-2 ps-1">@Utility.GetTranslation("Increase")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- نهاية بطاقة المبيعات -->
+        <!-- بطاقة الإيرادات -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                            <h6>@Utility.GetTranslation("FilterHeader")</h6>
+                        </li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.Today">@Utility.GetTranslation("FilterOptionToday")</button></li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.ThisMonth">@Utility.GetTranslation("FilterOptionThisMonth")</button></li>
+                        <li><button class="dropdown-item filter-btn" data-filter="@FilterOption.ThisYear">@Utility.GetTranslation("FilterOptionThisYear")</button></li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("RevenueTitle") <span class="curr-filter">| @Utility.GetTranslation("Today")</span></h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                        <div class="ps-3">
+                            <strong class="revenue-count">@Model.Revenue.ToString("c")</strong>
+                            <br />
+                            <span class="prev-revenue-percent text-success small pt-1 fw-bold">@Model.IncreasedRevenuePercent %</span>
+                            <span class="text-muted small pt-2 ps-1">@Utility.GetTranslation("Increase")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- نهاية بطاقة الإيرادات -->
+        <!-- Customers Card -->
+        <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("CustomersTitle") </h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.Customers</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Customers Card -->
+        <!-- المبيعات الأخيرة -->
+        <div class="col-12 h-100 ">
+            <div class="card recent-sales overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("RecentSalesTitle")</h5>
+                    <table  class="table table-borderless datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">@Utility.GetTranslation("Customer")</th>
+                                <th scope="col">@Utility.GetTranslation("Product")</th>
+                                <th scope="col">@Utility.GetTranslation("Price")</th>
+                                <th scope="col">@Utility.GetTranslation("Status")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var sale in Model.RecentSales)
+                            {
+                                <tr>
+                                    <th scope="row"><a href="#">#@sale.OrderId</a></th>
+                                    <td>@sale.CustomerName</td>
+                                    <td><a href="#" class="text-primary">@sale.ProductName</a></td>
+                                    <td>@sale.Price.ToString("C")</td>
+                                    <td>@Html.Raw(Utility.OrderStatusSpan(sale.Status))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- نهاية المبيعات الأخيرة -->
+        <!-- أفضل البيع -->
+        <div class="col-12 h-100">
+            <div  class="card top-selling overflow-auto">
+                <div class="card-body pb-0">
+                    <h5 class="card-title">@Utility.GetTranslation("TopSellingTitle")</h5>
+                    <table class="table table-borderless datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Utility.GetTranslation("Preview")</th>
+                                <th scope="col">@Utility.GetTranslation("Product")</th>
+                                <th scope="col">@Utility.GetTranslation("Price")</th>
+                                <th scope="col">@Utility.GetTranslation("SalesTitle")</th>
+                                <th scope="col">@Utility.GetTranslation("RevenueTitle")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.MostSellings)
+                            {
+                                <tr>
+                                    <th scope="row"><a href="#"><img src="~/Images/Products/@product.ProductPreviewUrl" alt=""></a></th>
+                                    <td><a href="#" class="text-primary fw-bold">@product.ProductName</a></td>
+                                    <td>@product.Price.ToString("c")</td>
+                                    <td class="fw-bold">@product.UnitsSold</td>
+                                    <td>@product.Revenue.ToString("c")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- نهاية أفضل البيع -->
+    </div>
+</div>
+
+<!-- End Left side columns -->
+<div class="col-lg-4 ">
+    <div class="row ">
+        <!-- products Card -->
+        <div class="col-xl-12">
+            <div class="card info-card Products-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("AvailableProductsTitle")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-box-fill"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.ProductsAvailable</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row ">
+        <!-- products Card -->
+        <div class="col-xl-12">
+            <div class="card info-card products-out-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("ExpiredProductsTitle")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-box"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.ProductsOut</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Customers Card -->
+    </div>
+
+    <div class="row ">
+        <!-- reviews Card -->
+        <div class="col-xl-12">
+            <div class="card info-card reviews-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("ReviewsTitle")</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.Reviews</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Customers Card -->
+    </div>
+
+    <div class="row ">
+        <!-- reviews Card -->
+        <div class="col-xl-12">
+            <div class="card info-card reviews-avg-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Utility.GetTranslation("TotalReviewsTitle")</h5>
+                    <div class="d-flex align-items-center justify-content-around">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-chevron-double-up"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>@Model.ReviewsAvg</h6>
+                        </div>
+                        <div class="rate">
+                            @{
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (Model.ReviewsAvg - i >= 1)
+                                    {
+                                        <span style="color:#2eca6a" class="bi bi-star-fill"></span>
+                                    }
+                                    else if (Model.ReviewsAvg - i > 0)
+                                    {
+                                        <span style="color:#2eca6a" class="bi bi-star-half"></span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:grey;" class="bi bi-star"></span>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+
+            $('.sales-card .filter-btn').click(function () {
+                const clicked_filter = $(this);
+                var filterOption = clicked_filter.data('filter');
+
+                $('.sales-card .curr-filter').html(clicked_filter.text());
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSalesCount","Home")',
+                    data: {  filterOption: filterOption },
+                    success: function (data) {
+            
+                        $('.sales-count').html(data.sales);
+                        $('.prev-sales-percent ').html(data.percentIncrease + '%');
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+
+            });
+
+            $('.revenue-card .filter-btn').click(function () {
+                const clicked_filter = $(this);
+                var filterOption = clicked_filter.data('filter');
+
+                $('.revenue-card  .curr-filter').html(clicked_filter.text());
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetRevenue", "Home")',
+                    data: { filterOption: filterOption },
+                    success: function (data) {
+                    
+                        $('.revenue-count').html(data.revenue);
+                        $('.prev-revenue-percent').html(data.percentIncrease + '%');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

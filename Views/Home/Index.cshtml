@@ -1,0 +1,397 @@
+﻿@model HomeVM
+
+<style>
+    /*****************************/
+    /* Shape */
+    /*****************************/
+    .tabs {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        width: 100%;
+        font-weight: 300;
+        font-size: 1.25em;
+    }
+
+        .tabs li {
+            cursor: pointer
+        }
+        /* Nav */
+        .tabs nav {
+            text-align: center;
+        }
+
+            .tabs nav ul {
+                position: relative;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flex;
+                display: flex;
+                margin: 0 auto;
+                padding: 0;
+                max-width: 1200px;
+                list-style: none;
+                -ms-box-orient: horizontal;
+                -ms-box-pack: center;
+                -webkit-flex-flow: row wrap;
+                -moz-flex-flow: row wrap;
+                -ms-flex-flow: row wrap;
+                flex-flow: row wrap;
+                -webkit-justify-content: center;
+                -moz-justify-content: center;
+                -ms-justify-content: center;
+                justify-content: center;
+            }
+
+                .tabs nav ul li {
+                    position: relative;
+                    z-index: 1;
+                    display: block;
+                    margin: 0;
+                    text-align: center;
+                    -webkit-flex: 1;
+                    -moz-flex: 1;
+                    -ms-flex: 1;
+                    flex: 1;
+                }
+
+            .tabs nav a {
+                position: relative;
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                line-height: 2.5;
+            }
+
+                .tabs nav a span {
+                    vertical-align: middle;
+                    font-size: 0.75em;
+                }
+
+            .tabs nav li.tab-current a {
+                color: #74777b;
+            }
+
+            .tabs nav a:focus {
+                outline: none;
+            }
+    /*****************************/
+    /* Line Box */
+    /*****************************/
+
+    .tabs-style-linebox nav ul li {
+        margin: 0 0.5em;
+        -webkit-flex: none;
+        flex: none;
+    }
+
+    .tabs-style-linebox nav a {
+        padding: 0 1.5em;
+        color: #74777b;
+        font-weight: 700;
+        -webkit-transition: color 0.3s;
+        transition: color 0.3s;
+    }
+
+        .tabs-style-linebox nav a:hover,
+        .tabs-style-linebox nav a:focus {
+            color: #b09d81;
+        }
+
+    .tabs-style-linebox nav li.tab-current a {
+        color: #fff;
+    }
+
+        .tabs-style-linebox nav li.tab-current a :hover {
+            color: #fff;
+        }
+
+    .tabs-style-linebox nav a::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        background: #d2d8d6;
+        content: '';
+        -webkit-transition: background-color 0.3s, -webkit-transform 0.3s;
+        transition: background-color 0.3s, transform 0.3s;
+        -webkit-transition-timing-function: ease, cubic-bezier(0.7,0,0.3,1);
+        transition-timing-function: ease, cubic-bezier(0.7,0,0.3,1);
+        -webkit-transform: translate3d(0,100%,0) translate3d(0,-3px,0);
+        transform: translate3d(0,100%,0) translate3d(0,-3px,0);
+    }
+
+    .tabs-style-linebox nav li.tab-current a::after {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+
+    .tabs-style-linebox nav a:hover::after,
+    .tabs-style-linebox nav a:focus::after,
+    .tabs-style-linebox nav li.tab-current a::after {
+        background: #b09d81;
+    }
+
+    }
+</style>
+
+
+@if (Model.Categories != null && Model.Categories.Count > 0)
+{
+    @section SubHeader {
+
+    <div bis_skin_checked="1">
+        <ul style="
+    display: flex;
+    justify-content:space-around;
+    width: 100%;
+    background: black;
+    color:white;
+	padding:0 4rem;
+    list-style:none">
+            @for (int i = 0; i < Math.Min(5, Model.Categories.Count); i++)
+                {
+                    var categ = Model.Categories[i];
+                    <li class="category-link">
+                        <a style="text-decoration:none; color:inherit" class="h4" asp-action="Index" asp-controller="Category" asp-route-id="@categ.ID">@categ.Name</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+
+    }
+}
+
+@section Featured {
+
+    <section class="hero-section set-bg" style="background-color:white" @* data-setbg="/images/bg.jpg" *@>
+        <div class="hero-slider owl-carousel">
+            @foreach (var banner in Model.Banners)
+            {
+                <div dir="ltr" class="pt-5 pb-5 mt-0 align-items-center d-flex" style="min-height: 100vh; background-size: contain; background-position: center; background-repeat: no-repeat; background-image: url('@Url.Content("~/Images/Banners/" + banner.ImageUrl)');">
+
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-12 col-md-6 pb-5 order-2 order-sm-2">
+
+                                <div>
+                                    @Html.Raw(banner.Description)
+                                    @if (!string.IsNullOrEmpty(banner.Link))
+                                    {
+                                        <div class="d-flex justify-content-center mt-1">
+                                            <a class="site-btn btn btn-line " style="text-decoration:none;box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15)!important;
+            " href="@banner.Link" role="button">
+                                                @Utility.GetTranslation("ShoppingNow")
+                                            </a>
+                                        </div>
+
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+
+
+    @if (Model.PremiumProducts != null && Model.PremiumProducts.Count > 0)
+    {
+        <!-- Intro section -->
+        <section class="intro-section spad pb-0" dir="ltr">
+            <div class="section-title">
+                <h2>@Utility.GetTranslation("PremiumProducts")</h2>
+                <p>@Utility.GetTranslation("Recommended")</p>
+            </div>
+            <div class="intro-slider">
+                <ul class="slidee">
+                    @foreach (var product in Model.PremiumProducts)
+                    {
+                        <li>
+
+                            <div class="intro-item">
+                                <figure>
+                                    @{
+                                        var productImage = product.MainProductImage ?? "no-image.jpg";
+
+                                    }
+                                    <img src="~/Images/Products/@productImage" alt="#">
+                                    @if (product.AddedDate > DateTime.Now.AddDays(-7))
+                                    {
+                                        <div class="bache">@Utility.GetTranslation("New")</div>
+                                    }
+                                </figure>
+                                <div class="product-info">
+                                    <a asp-action="ProductDetails" asp-controller="Home" asp-route-Id="@product.ID">
+                                        <h5>@product.Name</h5>
+                                    </a>
+                                    <p>@product.Price.ToString("C")</p>
+                                    <a onclick="AddToCart('@product.ID')" class="site-btn btn-line">@Utility.GetTranslation("AddToCart")</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div class="container">
+                <div class="scrollbar">
+                    <div class="handle">
+                        <div class="mousearea"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Intro section end -->
+    }
+
+
+    @if (Model.Categories != null && Model.Categories.Count > 0)
+    {
+
+        <!-- Featured section -->
+        <div class="featured-section spad">
+            <div class="container">
+                <div class="row">
+                    @foreach (var category in Model.Categories)
+                    {
+                        @if (string.IsNullOrEmpty(category.BannerUrl)) continue;
+                        <div class="col-md-6">
+                            <div class="featured-item">
+                                <img style="height:20rem" src="~/Images/Categories/@category.BannerUrl" alt="">
+
+                                <a asp-action="Index" asp-controller="Category" asp-route-id="@category.ID" class="site-btn">@Utility.GetTranslation("Shopping")</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+
+<section>
+    <form id="ProductsLoadSettings" method="post" action="/Home/GetProducts">
+        <input  class="setPage" type="hidden" asp-for="SettingsDto.Page" />
+        <input class="setTag" type="hidden" asp-for="SettingsDto.Tag" />
+       
+    </form>
+
+
+    <div id="products-container" class="container">
+
+        <div class="tabs tabs-style-linebox m-5">
+            <nav>
+                <ul id="filterTabs">
+                    @foreach (var tagValue in Enum.GetValues(typeof(ProductsTag)))
+                    {
+                        <li data-filter="@((int)tagValue)">
+                            <a>
+                                <span>@Utility.GetTranslation(tagValue.ToString())</span> <!-- Use ToString to get the name -->
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+
+        <div class="row ">
+        </div>
+
+    </div>
+
+    <div id="pagination-container">
+    </div>
+
+</section>
+
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/ProductCard_V.css" />
+    <style>
+        .category-link:hover {
+            background: #fff;
+            color: black;
+        }
+
+        .owl-carousel {
+            direction: ltr !important;
+        }
+
+        .owl-nav .owl-prev {
+            position: absolute;
+            left: 2rem;
+            top: 50%;
+        }
+
+        .owl-nav .owl-next {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+        }
+
+        .category-link img {
+            transition: transform 0.5s ease;
+        }
+
+        .category-link:hover img {
+            transform: rotate(360deg);
+        }
+
+    </style>
+}
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/UserActions.js"></script>
+    <script src="~/js/HomeActions.js"></script>
+    <script src="~/lib/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadProducts();
+            $('.owl-carousel').owlCarousel({
+                items: 1,
+                slideSpeed: 2000,
+                nav: true,
+                autoplay: true,
+                dots: true,
+                loop: true,
+                responsiveRefreshRate: 200,
+                navText: [
+                    "<i class='fa fa-caret-left h1 text-black-50'></i>",
+                    "<i class='fa fa-caret-right h1 text-black-50'></i>"
+                ],
+                rtl: true
+            });
+
+            paginationEvent();
+         
+        });
+
+        $("ul").on("click", "li", function () {
+            // Remove 'tab-current' class from all li elements
+            $("ul li").removeClass("tab-current");
+
+            // Add 'tab-current' class to the clicked li element
+            $(this).addClass("tab-current");
+
+            $('.setPage').val(1);
+            $('.setTag').val($(this).data("filter"));
+            loadProducts();
+        });
+
+    </script>
+
+}

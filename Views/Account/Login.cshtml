@@ -1,0 +1,44 @@
+﻿@model LoginVM
+@{
+    Layout = null;
+}
+
+<link href="~/css/access.css" rel="stylesheet" />
+
+
+<div class="container">
+    <header>@Utility.GetTranslation("Login")</header>
+   
+
+    <div class="form-outer">
+        <form method="post" asp-action="Login" asp-controller="Account">
+          
+            <div class="page">
+                <div class="field">
+                    
+                    <div class="label">@Utility.GetTranslation("Email")</div>
+                    <input type="email" asp-for="Email">
+                </div>
+                
+                <div class="field">
+                    
+                    <div class="label">@Utility.GetTranslation("Password")</div>
+                    <input type="password" asp-for="Password">
+                </div>
+              
+                <div class="field btns">
+                    <button type="submit" class="submit">@Utility.GetTranslation("Submit")</button>
+                </div>
+                <div>
+                    <span>@Utility.GetTranslation("RememberMe")</span>
+                <input type="checkbox" asp-for ="RememberMe" class="form-control"/>
+
+                </div>
+                <p>
+                    @Utility.GetTranslation("DontHaveAccount") <a asp-action="Register" asp-controller="Account" style="text-decoration:none;">@Utility.GetTranslation("Registration")</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+

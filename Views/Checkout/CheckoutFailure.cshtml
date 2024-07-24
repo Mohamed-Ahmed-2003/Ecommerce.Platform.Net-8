@@ -1,0 +1,11 @@
+﻿<div class="position-absolute translate-middle" style="left:50%;top:50%">
+<div class="d-flex flex-column justify-content-center align-items-center">
+        <i style="font-size:6rem; " class="fa-solid text-danger fa-triangle-exclamation"></i>
+        <p class="text-danger text-center">@Utility.GetTranslation("CheckoutFailedMesg")</p>
+    <div class="d-flex justify-content-between gap-2">
+        <a asp-action="Index" asp-controller="Cart" class="btn btn-outline-dark">@Utility.GetTranslation("GoToCart")</a>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-dark">@Utility.GetTranslation("GoHome")</a>
+    </div>
+</div>
+
+</div>
