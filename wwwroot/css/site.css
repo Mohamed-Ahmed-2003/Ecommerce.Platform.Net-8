@@ -1,0 +1,85 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+a{
+    text-decoration:none;
+}
+li {
+    list-style: none;
+}
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    color: #b09d81;
+}
+.tomato-color {
+    color: #b09d81 !important;
+}
+
+.bg-tomato {
+    color: white !important;
+    background-color: #b09d81 !important;
+}
+
+/*searching*/
+.searchbar {
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.search_input {
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color: transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+    order: 2; /* Set order to 2 to move the input to the right */
+}
+
+    .search_input.expanded {
+        padding: 0 10px;
+        width: 200px;
+        caret-color: #b09d81;
+        transition: width 0.4s linear;
+    }
+
+.search_icon {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #b09d81;
+    color: white;
+    text-decoration: none;
+    order: 1; /* Set order to 1 to move the icon to the left */
+}
+.search_icon:hover  i {
+    color:white;
+}
+
+
